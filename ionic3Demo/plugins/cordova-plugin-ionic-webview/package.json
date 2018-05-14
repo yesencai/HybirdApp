@@ -1,0 +1,106 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "cordova-plugin-ionic-webview@1.1.19",
+        "scope": null,
+        "escapedName": "cordova-plugin-ionic-webview",
+        "name": "cordova-plugin-ionic-webview",
+        "rawSpec": "1.1.19",
+        "spec": "1.1.19",
+        "type": "version"
+      },
+      "/Users/Dylan/Desktop/myApp/ionic3Demo"
+    ]
+  ],
+  "_cnpm_publish_time": 1522623905862,
+  "_from": "cordova-plugin-ionic-webview@1.1.19",
+  "_hasShrinkwrap": false,
+  "_id": "cordova-plugin-ionic-webview@1.1.19",
+  "_inCache": true,
+  "_location": "/cordova-plugin-ionic-webview",
+  "_nodeVersion": "8.9.4",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/cordova-plugin-ionic-webview_1.1.19_1522623905746_0.2946736766313047"
+  },
+  "_npmUser": {
+    "name": "maxlynch",
+    "email": "max@ionic.io"
+  },
+  "_npmVersion": "5.6.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "cordova-plugin-ionic-webview@1.1.19",
+    "scope": null,
+    "escapedName": "cordova-plugin-ionic-webview",
+    "name": "cordova-plugin-ionic-webview",
+    "rawSpec": "1.1.19",
+    "spec": "1.1.19",
+    "type": "version"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npm.taobao.org/cordova-plugin-ionic-webview/download/cordova-plugin-ionic-webview-1.1.19.tgz",
+  "_shasum": "7f18d30291153c4066f529399a8d8226aa4fb28e",
+  "_shrinkwrap": null,
+  "_spec": "cordova-plugin-ionic-webview@1.1.19",
+  "_where": "/Users/Dylan/Desktop/myApp/ionic3Demo",
+  "author": {
+    "name": "Ionic Team"
+  },
+  "bugs": {
+    "url": "https://github.com/ionic-team/cordova-plugin-ionic-webview/issues"
+  },
+  "dependencies": {},
+  "description": "The official Ionic's WKWebView Engine Plugin",
+  "devDependencies": {
+    "np": "^2.16.0",
+    "sync-cordova-xml": "^0.4.0"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "7f18d30291153c4066f529399a8d8226aa4fb28e",
+    "size": 66167,
+    "noattachment": false,
+    "tarball": "http://registry.npm.taobao.org/cordova-plugin-ionic-webview/download/cordova-plugin-ionic-webview-1.1.19.tgz"
+  },
+  "gitHead": "9ca2c2ffb653a63b4a0a633198641975db6686a7",
+  "homepage": "https://github.com/ionic-team/cordova-plugin-ionic-webview#readme",
+  "keywords": [
+    "cordova",
+    "wkwebview"
+  ],
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "manucorporat",
+      "email": "manu.mtza@gmail.com"
+    },
+    {
+      "name": "maxlynch",
+      "email": "max@ionic.io"
+    },
+    {
+      "name": "nhyatt",
+      "email": "nicholaspaulhyatt@gmail.com"
+    }
+  ],
+  "name": "cordova-plugin-ionic-webview",
+  "optionalDependencies": {},
+  "publish_time": 1522623905862,
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionic-team/cordova-plugin-ionic-webview.git"
+  },
+  "scripts": {
+    "deploy": "np --yolo",
+    "sync_plugin_xml": "sync-cordova-xml package.json plugin.xml --output=plugin.xml",
+    "version": "npm run sync_plugin_xml && git add plugin.xml"
+  },
+  "version": "1.1.19"
+}
