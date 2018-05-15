@@ -16,7 +16,8 @@ import { SettingPage } from '../pages/setting/setting';
 import { PersonPage } from '../pages/person/person';
 import { ChangePswPage } from '../pages/change-psw/change-psw';
 import { ResetPswPage } from '../pages/reset-psw/reset-psw';
-
+import {Camera} from "@ionic-native/camera";
+import {ImagePicker} from "@ionic-native/image-picker";
 @NgModule({
 	
   declarations: [
@@ -54,6 +55,8 @@ import { ResetPswPage } from '../pages/reset-psw/reset-psw';
   ],
   providers: [
     StatusBar,
+    Camera,
+    ImagePicker,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

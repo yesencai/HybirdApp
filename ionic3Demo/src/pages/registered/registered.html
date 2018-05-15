@@ -19,8 +19,8 @@
 	<ion-item>
 		<ion-label>验证码:　<input style="border: 0px;" type="text" placeholder="　请输入验证码" #code>
 		</ion-label>
-		<div item-right id="get-code-btn" style="text-align: center; width: 60; margin-right: 20px;">
-		<button ion-button block color="primary" (click)="clickCodebutton(username)">      获取验证码
+		<div item-right class="get-code-btn" style="text-align: center;">
+		<button ion-button round [disabled]="!verifyCode.disable"  color="primary"  (click)="clickCodebutton(username)">{{verifyCode.verifyCodeTips}}
     		</button>
 		</div>
 	</ion-item>

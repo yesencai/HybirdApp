@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController,ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 
 /**
@@ -21,47 +21,40 @@ export class RegisteredPage {
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad RegisteredPage');
 	}
-	getCode() {
-		let toast = this.toastCtrl.create({
-		message: "获取验证码成功!",
-		duration: 2000,
-		position:"top"
-			});
-			toast.present();
-	}
-	inRegister(username: HTMLInputElement, password: HTMLInputElement,code:HTMLInputElement) {
+
+	inRegister(username: HTMLInputElement, password: HTMLInputElement, code: HTMLInputElement) {
 		if(username.value.length == 0) {
 			let toast = this.toastCtrl.create({
 				message: "请输入账号!",
 				duration: 2000,
-				position:"top",
+				position: "top",
 			});
 			toast.present();
 		} else if(password.value.length == 0) {
 			let toast = this.toastCtrl.create({
 				message: "请输入密码!",
 				duration: 2000,
-				position:"top"
+				position: "top"
 
 			});
 			toast.present();
-		} else if(code.value.length == 0){
-			
+		} else if(code.value.length == 0) {
+
 			let toast = this.toastCtrl.create({
 				message: "请输入验证码!",
 				duration: 2000,
-				position:"top"
+				position: "top"
 
 			});
 			toast.present();
-		
-		}else{
+
+		} else {
 			let userinfo: string = '用户名：' + username.value + '密码：' + password.value;
 			if(userinfo.length > 0) {
 				let loading = this.loadingCtrl.create({
 					content: "注册中...",
 					duration: 2000,
-					
+
 				});
 				loading.present(loading);
 				setTimeout(() => {
@@ -71,26 +64,52 @@ export class RegisteredPage {
 
 		}
 	}
-	clickCodebutton(username:HTMLInputElement) {
-	if(username.value.length==0){
+	clickCodebutton(username: HTMLInputElement) {
+		if(username.value.length == 0) {
 
-				let toast = this.toastCtrl.create({
+			let toast = this.toastCtrl.create({
 				message: "请输入正确的用户名!",
 				duration: 2000,
-				position:"top"
+				position: "top"
 			});
 			toast.present();
-			}else{
-			
-			let toast = this.toastCtrl.create({
-				message: "获取验证码成功",
-				duration: 2000,
-				position:"top"
+		} else {
+			//发送验证码成功后开始倒计时
 
+			this.verifyCode.disable = false;
+			this.settime();
+
+			let toast = this.toastCtrl.create({
+				message: "获取验证码成功!",
+				duration: 2000,
+				position: "top"
 			});
 			toast.present();
-		
+
 		}
+	}
+	// 验证码倒计时
+	verifyCode: any = {
+		verifyCodeTips: "获取验证码",
+		countdown: 60,
+		disable: true
+	}
+	// 倒计时
+	settime() {
+		if(this.verifyCode.countdown == 1) {
+			this.verifyCode.countdown = 60;
+			this.verifyCode.verifyCodeTips = "获取验证码";
+			this.verifyCode.disable = true;
+			return;
+		} else {
+			this.verifyCode.countdown--;
+		}
+
+		this.verifyCode.verifyCodeTips = "重新获取(" + this.verifyCode.countdown + ")";
+		setTimeout(() => {
+			this.verifyCode.verifyCodeTips = "重新获取(" + this.verifyCode.countdown + ")";
+			this.settime();
+		}, 1000);
 	}
 
 }
