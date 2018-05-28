@@ -16,17 +16,17 @@ import { Camera, CameraOptions } from "@ionic-native/camera";
 })
 export class PersonPage {
 
-	avatar: string = "/src/assets/imgs/tomato.png";
+	avatar: string = "./assets/imgs/logo.png";
 	name: string = "未填写";
-	username :string = "未填写";
-	
+	username: string = "未填写";
+
 	constructor(public navCtrl: NavController, public navParams: NavParams, public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public imagePicker: ImagePicker, public camera: Camera, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
 		this.avatar = navParams.get('headimage');
 		this.name = navParams.get('name');
 		this.username = navParams.get('mobile');
 
 	}
-	
+
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad PersonPage');
 	}
@@ -66,84 +66,85 @@ export class PersonPage {
 		});
 		loading.present(loading);
 		setTimeout(() => {
-				let toast = this.toastCtrl.create({
-					message: "保存成功",
-					duration: 2000,
-					position: "top"
+			let toast = this.toastCtrl.create({
+				message: "保存成功",
+				duration: 2000,
+				position: "top"
 
-				});
-				toast.present();
-	}, 2000);
-}
-presentActionSheet() {
-	let actionSheet = this.actionSheetCtrl.create({
-		buttons: [{
-			text: '拍照',
-			role: 'takePhoto',
-			handler: () => {
-				this.takePhoto();
+			});
+			toast.present();
+		}, 2000);
+	}
+
+	presentActionSheet() {
+		let actionSheet = this.actionSheetCtrl.create({
+			buttons: [{
+				text: '拍照',
+				role: 'takePhoto',
+				handler: () => {
+					this.takePhoto();
+				}
+			}, {
+				text: '从相册选择',
+				role: 'chooseFromAlbum',
+				handler: () => {
+					this.chooseFromAlbum();
+				}
+			}, {
+				text: '取消',
+				role: 'cancel',
+				handler: () => {
+					console.log("cancel");
+				}
+			}]
+		});
+
+		actionSheet.present().then(value => {
+			return value;
+		});
+	}
+	takePhoto() {
+		const options: CameraOptions = {
+			quality: 100,
+			allowEdit: true,
+			targetWidth: 200,
+			targetHeight: 200,
+			saveToPhotoAlbum: true,
+		};
+
+		this.camera.getPicture(options).then(image => {
+			console.log('Image URI: ' + image);
+			this.avatar = image.slice(7);
+		}, error => {
+			console.log('Error: ' + error);
+		});
+	}
+
+	chooseFromAlbum() {
+		const options: ImagePickerOptions = {
+			maximumImagesCount: 1,
+			width: 200,
+			height: 200
+		};
+		this.imagePicker.getPictures(options).then(images => {
+			if(images.length > 1) {
+				this.presentAlert();
+			} else if(images.length === 1) {
+				console.log('Image URI: ' + images[0]);
+				this.avatar = images[0].slice(7);
 			}
-		}, {
-			text: '从相册选择',
-			role: 'chooseFromAlbum',
-			handler: () => {
-				this.chooseFromAlbum();
-			}
-		}, {
-			text: '取消',
-			role: 'cancel',
-			handler: () => {
-				console.log("cancel");
-			}
-		}]
-	});
+		}, error => {
+			console.log('Error: ' + error);
+		});
+	}
 
-	actionSheet.present().then(value => {
-		return value;
-	});
-}
-takePhoto() {
-	const options: CameraOptions = {
-		quality: 100,
-		allowEdit: true,
-		targetWidth: 200,
-		targetHeight: 200,
-		saveToPhotoAlbum: true,
-	};
+	presentAlert() {
+		let toast = this.toastCtrl.create({
+			message: "上传图片失败",
+			duration: 2000,
+			position: "top"
 
-	this.camera.getPicture(options).then(image => {
-		console.log('Image URI: ' + image);
-		this.avatar = image.slice(7);
-	}, error => {
-		console.log('Error: ' + error);
-	});
-}
-
-chooseFromAlbum() {
-	const options: ImagePickerOptions = {
-		maximumImagesCount: 1,
-		width: 200,
-		height: 200
-	};
-	this.imagePicker.getPictures(options).then(images => {
-		if(images.length > 1) {
-			this.presentAlert();
-		} else if(images.length === 1) {
-			console.log('Image URI: ' + images[0]);
-			this.avatar = images[0].slice(7);
-		}
-	}, error => {
-		console.log('Error: ' + error);
-	});
-}
-
-presentAlert() {
-	let toast = this.toastCtrl.create({
-		message: "上传图片失败",
-		duration: 2000,
-		position: "top"
-
-	});
-	toast.present();
-}
+		});
+		toast.present();
+	}
 }

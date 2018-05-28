@@ -17,7 +17,12 @@
 
   <!-- cordova.js required for cordova apps (remove if not needed) -->
   <script src="cordova.js"></script>
-
+  <script src="lib/crypto-js.js"></script>
+  <script src="lib/base64.js"></script>
+  <script src="lib/common.js"></script>
+  <script src="lib/json2.js"></script>
+  <script src="lib/paho-mqtt.js"></script>
+  <script src="lib/sdk.js"></script>
   <!-- un-comment this code to enable service worker
   <script>
     if ('serviceWorker' in navigator) {
@@ -26,8 +31,9 @@
         .catch(err => console.error('Error', err));
     }
   </script>-->
-
+  <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css">
   <link href="build/main.css" rel="stylesheet">
+
 
 </head>
 <body>
@@ -44,6 +50,11 @@
 
   <!-- The main bundle js is generated during the build process -->
   <script src="build/main.js"></script>
+
+
+
+
+
 
 </body>
 </html>

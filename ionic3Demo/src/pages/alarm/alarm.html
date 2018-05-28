@@ -1,0 +1,62 @@
+<!--
+	作者：yesencai@163.com
+	时间：2018-05-18
+	描述：设置报警
+-->
+<ion-header>
+	<ion-navbar color="primary">
+		<ion-title>设置报警</ion-title>
+		<ion-buttons end>
+			<button ion-button icon-only color="light" (click)="saveSetting()">
+      	保存
+      </button>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-list>
+  <ion-item>
+	  <ion-label class = "priority-style">报警优先级</ion-label>
+      <ion-select [(ngModel)]="priority" cancelText="取消" okText="确认" class = "item-note">
+      <ion-option value="短信" selected = "true">短信</ion-option>
+      <ion-option value="电话">电话</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item (click)="chooseNumber()">
+	  <ion-label class = "priority-style">多电话</ion-label>
+      <ion-buttons  item-right class = "some-number-style">{{phoneNumber}}</ion-buttons>
+  </ion-item>
+  <ion-item>
+	  <ion-label class = "priority-style">报警铃声</ion-label>
+      <ion-select [(ngModel)]="bell" cancelText="取消" okText="确认" class = "item-note">
+      <ion-option value="天空之城" selected = "true">天空之城</ion-option>
+      <ion-option value="黑色星期天">黑色星期天</ion-option>
+      <ion-option value="贝多芬的悲伤">贝多芬的悲伤</ion-option>
+      <ion-option value="李白">李白</ion-option>
+      <ion-option value="离别">离别</ion-option>
+      <ion-option value="淘汰">淘汰</ion-option>
+      <ion-option value="冬天的秘密">冬天的秘密</ion-option>
+    </ion-select>
+  </ion-item>
+  
+    <ion-item>
+	  <ion-label class = "priority-style">通知间隔</ion-label>
+      <ion-select [(ngModel)]="time" cancelText="取消" okText="确认" class = "item-note">
+      <ion-option value="10分钟" >10分钟</ion-option>
+      <ion-option value="20分钟" >20分钟</ion-option>
+      <ion-option value="30分钟" >30分钟</ion-option>
+      <ion-option value="半小时" >半小时</ion-option>
+      <ion-option value="一小时" >一小时</ion-option>
+      <ion-option value="两分钟" >两分钟</ion-option>
+      <ion-option value="一天" selected = "true">一天</ion-option>
+
+    </ion-select>
+  </ion-item>
+  <ion-item>
+      <ion-label class = "priority-style">误触告警取消</ion-label>
+      <ion-toggle value="foo" checked="true"></ion-toggle>
+    </ion-item>
+</ion-list>
+
+</ion-content>

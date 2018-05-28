@@ -73,6 +73,7 @@
 		E93685BA2BEC4AED8549F421 /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 7DE74E4F719443A1BD72968B /* fr.lproj */; };
 		F70CFC8C31884844ACC35160 /* PSYBlockTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F2C985045C04CA1831BF19C /* PSYBlockTimer.m */; };
 		FA65F22603B541FE89288C05 /* GMAlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 004B049BBDEE42A5AE8FCA05 /* GMAlbumsViewController.m */; };
+		A4C6546B7A7D449A90C19BD4 /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8974D255E5924FF1958BA664 /* CDVStatusBar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -221,6 +222,8 @@
 		FA53D9B824934B26B03C5DDA /* GCDWebServerErrorResponse.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = GCDWebServerErrorResponse.h; path = "cordova-plugin-ionic-webview/GCDWebServerErrorResponse.h"; sourceTree = "<group>"; };
 		FAAD78069D614AF3B43CB7F5 /* Security.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		FAED315500634B349F71335B /* CDVLocalFilesystem.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVLocalFilesystem.m; path = "cordova-plugin-file/CDVLocalFilesystem.m"; sourceTree = "<group>"; };
+		8974D255E5924FF1958BA664 /* CDVStatusBar.m */ = {isa = PBXFileReference; name = "CDVStatusBar.m"; path = "cordova-plugin-statusbar/CDVStatusBar.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		1A77389085C5416E9A20F1D4 /* CDVStatusBar.h */ = {isa = PBXFileReference; name = "CDVStatusBar.h"; path = "cordova-plugin-statusbar/CDVStatusBar.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -436,6 +439,8 @@
 				E5E673F320C444C3BDDE8DD3 /* PSYBlockTimer.h */,
 				006EFCEF372F43EC8F7C96F1 /* GMPHAsset.h */,
 				54DA51555A394352B055EC25 /* SOSPicker.m */,
+				8974D255E5924FF1958BA664 /* CDVStatusBar.m */,
+				1A77389085C5416E9A20F1D4 /* CDVStatusBar.h */,
 			);
 			name = Plugins;
 			path = MyApp/Plugins;
@@ -614,6 +619,7 @@
 				F70CFC8C31884844ACC35160 /* PSYBlockTimer.m in Sources */,
 				37256B81FACD440490EB0C66 /* GMPHAsset.m in Sources */,
 				DE692E585B664A299451C3B2 /* SOSPicker.m in Sources */,
+				A4C6546B7A7D449A90C19BD4 /* CDVStatusBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

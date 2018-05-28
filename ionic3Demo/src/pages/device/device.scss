@@ -1,0 +1,107 @@
+page-device {
+    .toolbar-title-md{
+    text-align: center;
+  }
+    .content {
+        background-color: rgb(229, 229, 229);
+    }
+    .siding-type{
+        padding-bottom: 20px;
+        background-color: rgb(229, 229, 229);
+    }
+    .add-device-style {
+        text-align: center;
+        margin-left: 30px;
+        margin-right: 30px;
+        top: 50%;
+        position: relative;
+    }
+      
+    .icon{
+        margin-right: 5px;
+        font-family: arial;
+        font-size: 13px;
+        color: gray;
+    }
+    .slide-zoom {    
+      height: 100%;    
+    }  
+    .segment-md .segment-button {  
+        color:red ;  
+    }  
+      
+    .segment-md .segment-button.segment-activated {  
+        color:#488aff ;  
+        font-weight: bold;
+        width: 100%;  
+    }  
+    .toolbar-ios .segment-button {
+        max-width: 100%;
+    }
+    .device-count{
+        font-size: 8pt;
+    }
+    .statue-protection{
+        color: red;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    .buttom-toobar{
+        min-height: 1rem;
+        height: 35px;
+        padding-left: 0px;
+        background-color:rgb(249, 249, 249);
+        // border-bottom:1px solid #c8c7cc;
+        font-size: 6pt;
+    }
+
+    #removal-style{
+        background-color:rgb(249, 249, 249);
+        display: inline-block;
+        width: 33%;
+        text-align: center;
+        color:gray;
+    }
+
+    #out-protection-style{
+        border-left: 1px solid #ccc;
+        background-color:rgb(249, 249, 249);
+        display: inline-block;
+        width: 33%;
+        text-align: center;
+        color:gray;
+
+    }
+    
+    #home-protection-style{
+        border-left: 1px solid #ccc;
+        background-color:rgb(249, 249, 249);
+        display: inline-block;
+        width: 33%;
+        text-align: center;
+        color:gray;
+
+    }
+    .list-ios .item-block .item-inner{
+        border:0;
+        padding-right:0;
+    }
+    .list-md .item-block .item-inner {
+        border:0;
+        padding-right:0;
+    }
+    .delete-button-style{
+        border-left: 1px solid #ccc;
+        background-color:#fff;
+        color:red;
+        width: 60px;
+        height: 100%;
+    }
+    .device-desc{
+        border:1px solid blue;
+    }
+    a ion-label, button ion-label{
+        pointer-events:auto;
+    }
+
+ }

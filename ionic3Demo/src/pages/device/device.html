@@ -1,0 +1,120 @@
+<ion-header>
+	<ion-navbar color="primary" no-border-bottom>
+		<ion-title>设备列表</ion-title>
+		<ion-buttons end>
+			<button ion-button icon-only color="light" (click)="addDevice()">
+				添加设备
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+	<ion-toolbar no-border-top>
+		<ion-segment [(ngModel)]="testSegment" mode="md">
+			<ion-segment-button *ngFor="let testItem of testArray" value="{{testItem}}">
+				{{testItem}}
+			</ion-segment-button>
+		</ion-segment>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<!--
+    	作者：yesencai@163.com
+    	时间：2018-05-16
+    	描述：添加设备的按钮
+    -->
+	<div class="add-device-style">
+		<button ion-button block color="primary" (click)="addDevice()" *ngIf="showGreeting">
+			添加设备
+		</button>
+	</div>
+
+	<!--
+     	作者：yesencai@163.com
+     	时间：2018-05-16
+     	描述：设备list列表
+	 -->
+	 <ion-refresher (ionRefresh)="doRefresh($event)"> 
+			<ion-refresher-content
+				pullingIcon="arrow-dropdown"
+				pullingText="下拉刷新"
+				refreshingSpinner="circles"
+				refreshingText="刷新..."> 
+			</ion-refresher-content>
+			<ion-refresher-content > 
+		</ion-refresher-content>
+		</ion-refresher>
+
+	<div [ngSwitch]="testSegment">
+		<div *ngSwitchCase="'在线设备'">
+
+
+			<ion-list class="device-list">
+				<a *ngFor="let item of listData">
+					<ion-item-sliding class="siding-type">
+						<ion-item (click)="deviceInfo(item)" style="padding-left:16px;">
+							<ion-avatar item-left>
+								<img [src]="item?.deviceImg" style="size: 50px;">
+							</ion-avatar>
+							<h2>{{item?.title}}</h2>
+							<p>电量：{{item?.electricity}}</p>
+							<p class="device-count">子设备数量：{{item?.count}}</p>
+							<p class="statue-protection">{{item?.protectionState ? "已布防" : "已撤防"}}</p>
+							<ion-icon item-right>{{item?.onlineState ? item?.onlineStype + "在线" :"离线"}}</ion-icon>
+						</ion-item>
+						<ion-item class="buttom-toobar">
+							<button class="button button-position" color = "light" ion-button id="removal-style" (click)="removal($event,item)">
+								<ion-icon name="unlocked"></ion-icon>
+								撤防
+							</button>
+							<button class="button button-position" color="light" ion-button id="out-protection-style" (click)="outProtection($event,item)">
+								<ion-icon name="location"></ion-icon>
+								外出布防
+							</button>
+							<button class="button button-position delete-button-style" color="light" ion-button id="home-protection-style" (click)="homeProtection($event,item)">
+								<ion-icon name="home"></ion-icon>
+								在家布防
+							</button>
+						</ion-item>
+						<!-- <ion-item-options>
+							<button class="delete-button-style-online" (click)="removeItem(item)">
+								<ion-icon trash></ion-icon> 删除</button>
+						</ion-item-options> -->
+
+					</ion-item-sliding>
+
+				</a>
+			</ion-list>
+			<!--下滑的时候，加载数据-->
+		
+		</div>
+
+		<div *ngSwitchCase="'离线设备'">
+			<ion-list class="device-list">
+				<a *ngFor="let item of listData">
+					<ion-item-sliding class="siding-type">
+						<ion-item>
+
+							<ion-avatar item-left>
+								<img [src]="item?.deviceImg" style="size: 50px;">
+							</ion-avatar>
+							<h2>{{item?.title}}</h2>
+							<p>电量：{{item?.electricity}}</p>
+							<p class="device-count">子设备数量：{{item?.count}}</p>
+
+							<button style="margin-right: 0;" class="button button-position delete-button-style" item-right (click)="removeItem($event,item)">
+								删除</button>
+						</ion-item>
+
+					</ion-item-sliding>
+
+				</a>
+			</ion-list>
+		</div>
+	</div>
+	<ion-infinite-scroll (ionInfinite)="doInfinite($event)"> 
+			<ion-infinite-scroll-content
+			 loadingSpinner="bubbles"
+			 loadingText="加载中..."> 
+			 </ion-infinite-scroll-content> 
+		 </ion-infinite-scroll>
+</ion-content>

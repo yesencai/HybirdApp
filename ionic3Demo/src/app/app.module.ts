@@ -3,8 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
+import { DevicePage } from '../pages/device/device';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -18,19 +17,31 @@ import { ChangePswPage } from '../pages/change-psw/change-psw';
 import { ResetPswPage } from '../pages/reset-psw/reset-psw';
 import {Camera} from "@ionic-native/camera";
 import {ImagePicker} from "@ionic-native/image-picker";
+import {AboutPage} from '../pages/about/about';
+import {DeviceInfoPage} from '../pages/device-info/device-info';
+import {AlarmPage} from '../pages/alarm/alarm';
+import {HistoryPage} from '../pages/history/history';
+import {AddDevicePage} from '../pages/add-device/add-device';
+import {AlarmNumberPage} from '../pages/alarm-number/alarm-number';
+
 @NgModule({
 	
   declarations: [
     MyApp,
     LoginPage,
+    AlarmNumberPage,
+    AboutPage,
     ResetPswPage,
     RegisteredPage,
+    AlarmPage,
     SettingPage,
     ChangePswPage,
-    ContactPage,
-    HomePage,
+    DeviceInfoPage,
+    DevicePage,
     TabsPage,
-    PersonPage
+    PersonPage,
+    HistoryPage,
+    AddDevicePage
   ],
   imports: [
     BrowserModule,
@@ -43,15 +54,20 @@ import {ImagePicker} from "@ionic-native/image-picker";
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    AlarmNumberPage,
+    DeviceInfoPage,
     LoginPage,
+    AlarmPage,
+    AboutPage,
     ResetPswPage,
     RegisteredPage,
     SettingPage,
     ChangePswPage,
-    ContactPage,
-    HomePage,
+    DevicePage,
     TabsPage,
-    PersonPage
+    PersonPage,
+    HistoryPage,
+    AddDevicePage
   ],
   providers: [
     StatusBar,
@@ -62,4 +78,5 @@ import {ImagePicker} from "@ionic-native/image-picker";
   ]
 })
 export class AppModule {
+ 
 }

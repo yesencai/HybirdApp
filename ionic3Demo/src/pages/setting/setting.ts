@@ -3,6 +3,8 @@ import { IonicPage,NavController, NavParams,Events,AlertController} from 'ionic-
 import { PersonPage } from '../person/person';
 import { ChangePswPage } from '../change-psw/change-psw';
 import { ResetPswPage } from '../reset-psw/reset-psw';
+import {AboutPage} from '../about/about';
+import { DevicePage } from '../device/device';
 
 
 /**
@@ -20,7 +22,7 @@ import { ResetPswPage } from '../reset-psw/reset-psw';
 export class SettingPage {
 
 	
-	headimage : string  = "/Users/Dylan/Desktop/HybirdApp-master/ionic3Demo/src/assets/imgs/tomato.png";
+	headimage : string  = "./assets/imgs/logo.png";
 	name :string = "未填写";
 	mobile : string = "未填写";
 
@@ -36,9 +38,9 @@ export class SettingPage {
 	seleteItem(index) {
 		if(index == 1) {
 			this.navCtrl.push(PersonPage,{
-				headimage:"/Users/Dylan/Desktop/HybirdApp-master/ionic3Demo/src/assets/imgs/tomato.png",
-					name:"未填写",
-					mobile:"未填写"
+				headimage:this.headimage,
+					name:this.name,
+					mobile:this.mobile
 				
 			});
 		} else if(index == 2) {
@@ -46,11 +48,9 @@ export class SettingPage {
 		} else if(index == 3) {
 			this.navCtrl.push(ResetPswPage);
 		} else if(index == 4) {
-
-		} else if(index == 5) {
-
+			this.navCtrl.push(DevicePage);
 		} else {
-
+			this.navCtrl.push(AboutPage);
 		}
 	}
 	doConfirm() {

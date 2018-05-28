@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
 import { SettingPage } from '../setting/setting';
-import { ContactPage } from '../contact/contact';
-import { HomePage } from '../home/home';
+import { DevicePage } from '../device/device';
 import { LoginPage } from '../login/login';
 @Component({
 	templateUrl: 'tabs.html'
@@ -12,15 +11,10 @@ export class TabsPage {
 
 	constructor(private nav: NavController, private events: Events) {
 		this.tabRoots = [{
-				root: HomePage,
-				tabTitle: 'home',
+				root: DevicePage,
+				tabTitle: 'device',
 				tabIcon: 'home'
-			},
-			{
-				root: ContactPage,
-				tabTitle: 'news',
-				tabIcon: 'notifications'
-			},
+		},
 			{
 				root: SettingPage,
 				tabTitle: 'setting',

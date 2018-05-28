@@ -2,6 +2,11 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 
+import {DSTTYPE_SERVER,SdkSendStr} from '../../lib/sdk'
+import {zx_sdk_MakeHeader,zx_sdk_MakeParam,zx_sdk_SendStrByParent} from '../../lib/common'
+
+import {Base64} from "js-base64";
+import { CLIENT_SMS, CLIENT_SMS_USER, CLIENT_SMS_TYPE } from '../../lib/pack';
 /**
  * Generated class for the RegisteredPage page.
  *
@@ -51,6 +56,9 @@ export class RegisteredPage {
 		} else {
 			let userinfo: string = '用户名：' + username.value + '密码：' + password.value;
 			if(userinfo.length > 0) {
+
+			
+
 				let loading = this.loadingCtrl.create({
 					content: "注册中...",
 					duration: 2000,
@@ -74,18 +82,16 @@ export class RegisteredPage {
 			});
 			toast.present();
 		} else {
-			//发送验证码成功后开始倒计时
 
+			//调用获取验证码接口
+			var dat = zx_sdk_MakeHeader(CLIENT_SMS) + 
+			zx_sdk_MakeParam(CLIENT_SMS_USER, Base64.encode(username.value)) +
+			zx_sdk_MakeParam(CLIENT_SMS_TYPE, "1");
+			zx_sdk_SendStrByParent(DSTTYPE_SERVER, " ", dat);
+
+			//发送验证码成功后开始倒计时
 			this.verifyCode.disable = false;
 			this.settime();
-
-			let toast = this.toastCtrl.create({
-				message: "获取验证码成功!",
-				duration: 2000,
-				position: "top"
-			});
-			toast.present();
-
 		}
 	}
 	// 验证码倒计时
@@ -111,5 +117,13 @@ export class RegisteredPage {
 			this.settime();
 		}, 1000);
 	}
-
+	//获取验证码后的提示信息，失败或成功
+	codeMessage(msg){
+		let toast = this.toastCtrl.create({
+			message: msg,
+			duration: 2000,
+			position: "top"
+		});
+		toast.present();
+	}
 }
