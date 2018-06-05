@@ -4,20 +4,7 @@ import { IonicPage, NavController, NavParams, LoadingController,ToastController 
 import { RegisteredPage } from '../registered/registered';
 import { TabsPage } from '../tabs/tabs';
 import { ResetPswPage } from '../reset-psw/reset-psw';
-
-import {DSTTYPE_SERVER} from '../../lib/sdk'
-import {zx_sdk_MakeHeader,zx_sdk_MakeParam,zx_sdk_SendStrByParent} from '../../lib/common'
-
-import {Base64} from "js-base64";
-import { CM_LOGIN, CM_LOGIN_USER, CM_LOGIN_PASS } from '../../lib/pack';
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
+import { Base64 } from 'js-base64';
 @IonicPage()
 @Component({
 	selector: 'page-login',
@@ -50,13 +37,7 @@ export class LoginPage {
 		} else {
 			let userinfo: string = '用户名：' + username.value + '密码：' + password.value;
 			if(userinfo.length > 0) {
-
-				//发送登录指令
-				var dat = zx_sdk_MakeHeader(CM_LOGIN) + 
-				zx_sdk_MakeParam(CM_LOGIN_USER, Base64.encode(username.value,true)) +
-				zx_sdk_MakeParam(CM_LOGIN_PASS, Base64.encode(password.value,true));
-				zx_sdk_SendStrByParent(DSTTYPE_SERVER, " ", dat)
-
+				 
 				let loading = this.loadingCtrl.create({
 					content: "登录中...",
 					duration: 2000,

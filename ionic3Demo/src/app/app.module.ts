@@ -23,7 +23,10 @@ import {AlarmPage} from '../pages/alarm/alarm';
 import {HistoryPage} from '../pages/history/history';
 import {AddDevicePage} from '../pages/add-device/add-device';
 import {AlarmNumberPage} from '../pages/alarm-number/alarm-number';
-
+import { Tomato } from '../lib/tomato'
+import { Common } from '../lib/Common'
+import { TTConst } from '../lib/TTConst'
+import { DataModule } from '../other/DataModule'
 @NgModule({
 	
   declarations: [
@@ -74,6 +77,10 @@ import {AlarmNumberPage} from '../pages/alarm-number/alarm-number';
     Camera,
     ImagePicker,
     SplashScreen,
+    Tomato,
+    Common,
+    DataModule,
+    TTConst,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
