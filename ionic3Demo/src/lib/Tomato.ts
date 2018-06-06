@@ -59,17 +59,17 @@ var _this;
 @Injectable()
 export class Tomato {
 
-  DSTTYPE_SERVER : number = 2;     //发送给应用服务器，这里的值有两种，0和2，
+  DSTTYPE_SERVER: number = 2;     //发送给应用服务器，这里的值有两种，0和2，
   //当服务器是使用普通的设备来实现时填写2，
   //当服务器是使用消息队列来实现时填写0
-  DSTTYPE_DEVCLI : number = 1;     //发送给其它设备
+  DSTTYPE_DEVCLI: number = 1;     //发送给其它设备
 
   //构造函数 依赖注入
   constructor(public platform: Platform,
     public appCtrl: App,
-    public toastCtrl: ToastController) { 
-      _this =  this;
-    }
+    public toastCtrl: ToastController) {
+    _this = this;
+  }
 
   /*显示调试信息*/
   echoDebugInfo(ADebugText) {
@@ -144,7 +144,7 @@ export class Tomato {
     if (FLogEchoCallBack != null) {
       FLogEchoCallBack(LOGTYPE_INFO, 2, msg);
     } else {
-       _this.echoDebugInfo(msg);
+      _this.echoDebugInfo(msg);
     }
 
     if (FEventCallBack != null) {
@@ -168,7 +168,7 @@ export class Tomato {
     if (FLogEchoCallBack != null) {
       FLogEchoCallBack(LOGTYPE_INFO, 3, msg);
     } else {
-       _this.echoDebugInfo(msg);
+      _this.echoDebugInfo(msg);
     }
 
     if (FEventCallBack != null) {
@@ -199,8 +199,8 @@ export class Tomato {
       var mPayloadString, mSrcID, mDstID, mSrcType, mData, mJsonObject;
       mPayloadString = message.payloadString;
 
-      if ( _this.isJSON(mPayloadString)) {
-        mJsonObject =  _this.JsonStrToObject(mPayloadString);
+      if (_this.isJSON(mPayloadString)) {
+        mJsonObject = _this.JsonStrToObject(mPayloadString);
         mSrcType = mJsonObject.dty;
         mSrcID = mJsonObject.sid;
         mDstID = mJsonObject.did;
@@ -230,7 +230,6 @@ export class Tomato {
                 FRecvCallBack(mSrcType, mSrcID, str);
 
               }
-
             }
           }
         }
@@ -247,18 +246,16 @@ export class Tomato {
     }
 
     // set callback handlers
-    FMqttClient.onConnectionLost =  _this.onConnectionLost;
-    FMqttClient.onMessageArrived =  _this.onMessageArrived;
-
-
+    FMqttClient.onConnectionLost = _this.onConnectionLost;
+    FMqttClient.onMessageArrived = _this.onMessageArrived;
     var options = {
       invocationContext: { host: AHostName, port: APort, path: FMqttClient.path, clientId: AClientID },
       timeout: ATimeOut,
       keepAliveInterval: AKeepAlive,
       cleanSession: ACleanSession,
       useSSL: ATls,
-      onSuccess:  _this.onConnect,
-      onFailure:  _this.onFail,
+      onSuccess: _this.onConnect,
+      onFailure: _this.onFail,
       userName: "",
       password: ""
     };
@@ -382,8 +379,8 @@ export class Tomato {
     FDeveloperID = DeveloperID;
     FCustomData = CustomData;
 
-    if ( _this.isJSON(FCustomData)) {
-      var mJsonObj =  _this.JsonStrToObject(FCustomData);
+    if (_this.isJSON(FCustomData)) {
+      var mJsonObj = _this.JsonStrToObject(FCustomData);
       FHostName = mJsonObj.HostName;
       FHostPort = mJsonObj.HostPort;
       FProductKey = mJsonObj.productKey;
@@ -406,18 +403,18 @@ export class Tomato {
   SdkStart() {
     var iRet = 0;
     if (FMqttParamsInited == true) {
-      var iTimeStamp =  _this.RandomInt(1, 1000000);
+      var iTimeStamp = _this.RandomInt(1, 1000000);
       var mClientID = "12345";
       var mAliClientID = mClientID + "|securemode=2,signmethod=hmacsha1,timestamp=" + iTimeStamp + "|";
       var mUser = FDeviceName + "&" + FProductKey;
 
       var mPassSrc = "clientId" + mClientID + "deviceName" + FDeviceName + "productKey" + FProductKey + "timestamp" + iTimeStamp;
       var mPassKey = FDeviceSecret;
-      var mPassEnc =  _this.GetHmacSHA1(mPassSrc, mPassKey);
-       _this.connect(FHostName, FHostPort, mAliClientID, "/wss", mUser, mPassEnc, 60, 3, true, true);
+      var mPassEnc = _this.GetHmacSHA1(mPassSrc, mPassKey);
+      _this.connect(FHostName, FHostPort, mAliClientID, "/wss", mUser, mPassEnc, 60, 3, true, true);
     } else {
       iRet = 1;
-       _this.echoDebugInfo("MQTT Params not init.")
+      _this.echoDebugInfo("MQTT Params not init.")
     }
     return iRet;
 
@@ -431,7 +428,7 @@ export class Tomato {
   //其它说明：
   //
   SdkStop() {
-     _this.disconnect();
+    _this.disconnect();
     return 0;
   }
 
@@ -475,7 +472,7 @@ export class Tomato {
     }
     var mJsonStr = '{"sid":"' + FDeviceName + '","did":"' + mDstID + '","dty":"' + DstType + '","data":"S' + StrPack + '"}';
     var mTopic = "/" + FProductKey + "/" + FDeviceName + "/update";
-     _this.publish(mTopic, 0, mJsonStr, false);
+    _this.publish(mTopic, 0, mJsonStr, false);
     return 0;
   }
 

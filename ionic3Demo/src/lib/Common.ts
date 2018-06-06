@@ -42,6 +42,10 @@ export class Common {
         return result;
     }
 
+    disconnect(){
+        this.tomato.disconnect;
+    }
+    
     //通过主页面发送字符串数据包，本函数只能在子页面中调用，不能在主页面调用，否则会出错
     SendStrByParent(DstType, DstID, StrPack) {
         this.tomato.SdkSendStr(DstType, DstID, StrPack);

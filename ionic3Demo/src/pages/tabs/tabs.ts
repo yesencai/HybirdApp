@@ -28,13 +28,13 @@ export class TabsPage {
 	}
 
 	ionViewWillUnload() {
-		this.events.unsubscribe('toLogin');
-		// console.log('界面销毁');
+		console.log(this+'界面销毁');
 	}
 
 	listenEvents() {
 		this.events.subscribe('toLogin', () => {
 			this.nav.setRoot(LoginPage);
+			this.events.unsubscribe('toLogin');
 			// this.nav.pop(); 使用这种方式也可以，但是会在登录框中默认填上值
 			// console.log('返回登录');
 		});

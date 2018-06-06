@@ -245,10 +245,14 @@ export class TTConst {
   ACK_CLIENT_SET: number = 0x2015;
   ACK_CLIENT_SET_SUCCESS: number = 1; // 设置成功回复1，失败回复0
   ACK_CLIENT_SET_ERRORINFO: number = 2;
-  //构造函数 依赖注入
-  constructor(public platform: Platform,
-    public appCtrl: App,
-    public toastCtrl: ToastController) {
-  }
+
+  /****************通知名字 *********************/
+
+  TT_LOGIN_NOTIFICATION_NAME :any = 'TT_LOGIN'//登录成功通知
+  TT_REGISTED_NOTIFICATION_NAME :any = 'TT_REGISTED'//注册成功通知
+  TT_CHAGEPASSWORD_NOTIFICATION_NAME :any = 'TT_CHANGEPASSWORD'//修改密码成功通知
+  TT_EXIT_NOTIFICATION_NAME :any = 'TT_EXIT'//退出登录成功通知
+  TT_RESETPASSWORD_NOTIFICATION_NAME :any = 'TT_RESETPASSWORD'//重置密码成功通知
+
 
 }

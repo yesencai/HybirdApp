@@ -5,6 +5,7 @@ import { Common } from '../../lib/Common'
 import { TTConst } from '../../lib/TTConst'
 import { Tomato } from '../../lib/tomato'
 import { Base64 } from 'js-base64';
+import { Emitter } from "../../other/emitter";
 
 
 /**
@@ -21,12 +22,21 @@ import { Base64 } from 'js-base64';
 })
 export class RegisteredPage {
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato) { }
+	constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato) {
+		let self = this;
+		Emitter.register(ttConst.TT_REGISTED_NOTIFICATION_NAME, self.onRegistResponse, self);
+
+	}
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad RegisteredPage');
 	}
-
+	//y页面将要离开
+	ionViewWillUnload() {
+		console.log(this + '界面销毁');
+		let self = this;
+		Emitter.remove(this.ttConst.TT_REGISTED_NOTIFICATION_NAME, self.removeEmitter, self);
+	}
 	inRegister(username: HTMLInputElement, password: HTMLInputElement, code: HTMLInputElement) {
 		if (username.value.length == 0) {
 			let toast = this.toastCtrl.create({
@@ -56,17 +66,13 @@ export class RegisteredPage {
 		} else {
 			let userinfo: string = '用户名：' + username.value + '密码：' + password.value;
 			if (userinfo.length > 0) {
-				
+
 				this.common.showLoading("注册中...");
 				var dat = this.common.MakeHeader(this.ttConst.CLIENT_RAGISTER) +
-				this.common.MakeParam(this.ttConst.CLIENT_RAGISTER_USERNAME, username.value) +
-				this.common.MakeParam(this.ttConst.CLIENT_RAGISTER_PASSWORD, password.value) +
-				this.common.MakeParam(this.ttConst.CLIENT_RAGISTER_SMS, code.value);
+					this.common.MakeParam(this.ttConst.CLIENT_RAGISTER_USERNAME, username.value) +
+					this.common.MakeParam(this.ttConst.CLIENT_RAGISTER_PASSWORD, password.value) +
+					this.common.MakeParam(this.ttConst.CLIENT_RAGISTER_SMS, code.value);
 				this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, "", dat);
-
-				setTimeout(() => {
-					this.navCtrl.setRoot(TabsPage)
-				}, 2000);
 			}
 
 		}
@@ -81,6 +87,7 @@ export class RegisteredPage {
 			});
 			toast.present();
 		} else {
+
 			//调用获取验证码接口
 			var dat = this.common.MakeHeader(this.ttConst.CLIENT_SMS) +
 				this.common.MakeParam(this.ttConst.CLIENT_SMS_USER, username.value) +
@@ -115,5 +122,28 @@ export class RegisteredPage {
 			this.settime();
 		}, 1000);
 	}
-	
+
+	//注册成功后的回调信息
+	onRegistResponse(name, flag, msg) {
+		this.common.hideLoading();
+		if (flag == '1') {
+			this.navCtrl.setRoot(TabsPage)
+		} else {
+			this.codeMessage(msg)
+		}
+	}
+	//获取验证码后的提示信息，失败或成功
+	codeMessage(msg) {
+		let toast = this.toastCtrl.create({
+			message: msg,
+			duration: 2000,
+			position: "top"
+		});
+		toast.present();
+	}
+
+	removeEmitter(dd) {
+
+	}
+
 }
