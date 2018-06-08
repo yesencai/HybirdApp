@@ -1,15 +1,17 @@
-import { Component } from '@angular/core';
-import { NavController, Events } from 'ionic-angular';
+import { Component ,ViewChild} from '@angular/core';
+import { NavController, Events ,Platform,Tabs} from 'ionic-angular';
 import { SettingPage } from '../setting/setting';
 import { DevicePage } from '../device/device';
 import { LoginPage } from '../login/login';
+import { BackButtonProvider } from '../../other/back-button-provider'
 @Component({
 	templateUrl: 'tabs.html'
 })
 export class TabsPage {
 	tabRoots: Object[];
-
-	constructor(private nav: NavController, private events: Events) {
+	@ViewChild('myTabs') tabRef: Tabs;
+	constructor(private nav: NavController, private events: Events,public backButtonService: BackButtonProvider,
+		private platform: Platform) {
 		this.tabRoots = [{
 				root: DevicePage,
 				tabTitle: 'device',
@@ -21,6 +23,9 @@ export class TabsPage {
 				tabIcon: 'person'
 			}
 		];
+		this.platform.ready().then(() => {
+			this.backButtonService.registerBackButtonAction(this.tabRef);
+		  });
 	}
 	ionViewDidLoad() {
 		this.listenEvents();

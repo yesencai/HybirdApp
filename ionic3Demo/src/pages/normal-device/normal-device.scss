@@ -1,0 +1,25 @@
+
+page-normal-device {
+    .toolbar-title-md {
+        text-align: center;
+    }
+    #add-device-page {
+        position: absolute;
+        top: 20px;
+        left: 0px;
+        right: 0px;
+    }
+    .label {
+        margin-left: 0;
+        width: 60px;
+        //  background-color: black;
+        color: black;
+    }
+    
+    .deviceid-input {
+        margin-left: 180;
+        margin-right: 30;
+                background-color: white;
+
+    }
+}

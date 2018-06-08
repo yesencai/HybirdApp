@@ -27,6 +27,9 @@ import { Tomato } from '../lib/tomato'
 import { Common } from '../lib/Common'
 import { TTConst } from '../lib/TTConst'
 import { DataModule } from '../other/DataModule'
+import { BackButtonProvider } from '../other/back-button-provider'
+import { NormalDevicePage } from '../pages/normal-device/normal-device'
+import { WifiDevicePage } from '../pages/wifi-device/wifi-device'
 @NgModule({
 	
   declarations: [
@@ -44,7 +47,9 @@ import { DataModule } from '../other/DataModule'
     TabsPage,
     PersonPage,
     HistoryPage,
-    AddDevicePage
+    AddDevicePage,
+    NormalDevicePage,
+    WifiDevicePage
   ],
   imports: [
     BrowserModule,
@@ -70,7 +75,9 @@ import { DataModule } from '../other/DataModule'
     TabsPage,
     PersonPage,
     HistoryPage,
-    AddDevicePage
+    AddDevicePage,
+    NormalDevicePage,
+    WifiDevicePage
   ],
   providers: [
     StatusBar,
@@ -80,6 +87,7 @@ import { DataModule } from '../other/DataModule'
     Tomato,
     Common,
     DataModule,
+    BackButtonProvider,
     TTConst,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

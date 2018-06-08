@@ -77,6 +77,14 @@ export class DataModule {
                 _this.onResetPassWordResponse(PackData);
                 break;
             }
+            case _this.ttConst.ACK_CLIENT_ADD_FIRST_DEVICE: {
+                _this.onAddNormalDeviceResponse(PackData);
+                break;
+            }
+            case _this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE: {
+                _this.onGetDeviceListResponse(PackData);
+                break;
+            }
         }
     }
 
@@ -126,6 +134,44 @@ export class DataModule {
         var mFlag = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_UNPASSWORD_SUCCESS);
         var message = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_UNPASSWORD_ERRORINFO);
         Emitter.fire(this.ttConst.TT_RESETPASSWORD_NOTIFICATION_NAME, mFlag, message);
+    }
+    //添加普通设备成功数据处理
+    onAddNormalDeviceResponse(PackData) {
+        var mFlag = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_ADD_FIRST_DEVICE_SUCCESS);
+        var message = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_ADD_FIRST_DEVICE_ERRORINFO);
+        Emitter.fire(this.ttConst.TT_ADDNORMALDEVECE_NOTIFICATION_NAME, mFlag, message);
+    }
+    //添加普通设备成功数据处理
+    onGetDeviceListResponse(PackData) {
+        // 网关名称，唯一识别号
+        var deviceId = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_ID);
+        // 模式，GPRS 或 WIFI
+        var deviceMode = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_MODE);
+        // 在线状态
+        var deviceOnline = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_ONLINE);
+        // 外出布防\留守布防\撤防\告警等
+        var deviceStat = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_STAT);
+        // 别名，自定义名
+        var deviceName= this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_NAME);
+        var deviceNotifyalarmPhone1 = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_PHONE1);
+        var deviceNotifyalarmPhone2 = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_PHONE2);
+        var deviceNotifyalarmMode= this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_MODE);
+        //以下不作用于门磁
+        var deviceNotifyalarm = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_TIME);
+        // 下挂的第二级设备数量      
+        var deviceNumber= this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FSECOND_DEVICE_NUMBER);
+
+        Emitter.fire(this.ttConst.TT_GETDEVICELIST_NOTIFICATION_NAME,
+              deviceId,
+              deviceMode,
+              deviceOnline,
+              deviceStat,
+              deviceName,
+              deviceNotifyalarmPhone1,
+              deviceNotifyalarmPhone2,
+              deviceNotifyalarmMode,
+              deviceNotifyalarm,
+              deviceNumber);
     }
 
     //获取验证码后的提示信息，失败或成功

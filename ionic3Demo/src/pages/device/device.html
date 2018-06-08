@@ -58,8 +58,8 @@
 							<h2>{{item?.title}}</h2>
 							<p>电量：{{item?.electricity}}</p>
 							<p class="device-count">子设备数量：{{item?.count}}</p>
-							<p class="statue-protection">{{item?.protectionState ? "已布防" : "已撤防"}}</p>
-							<ion-icon item-right>{{item?.onlineState ? item?.onlineStype + "在线" :"离线"}}</ion-icon>
+							<p class="statue-protection">{{item?.protectionState}}</p>
+							<ion-icon item-right>{{item?.onlineState}}</ion-icon>
 						</ion-item>
 						<ion-item class="buttom-toobar">
 							<button class="button button-position" color = "light" ion-button id="removal-style" (click)="removal($event,item)">

@@ -11,24 +11,28 @@
   </ion-navbar>
 </ion-header>
 
-
-<ion-content>
-    <p style="font-size: 13pt;margin-left: 20px">
-        配置WiFi:
-      </p>
-  <div style="width: 100%;color: #ccc;font-size:20pt;text-align:center">
-        <span>WiFi名字</span>
-        <img src="../../assets/imgs/wifi.png" style="size: 30px;margin-left: 50px;vertical-align:middle">
+<ion-content class="content-bg">
+  <div id="page-top">
+      
+    <button ion-button  icon-right id="top-button" (click)="addNomalDevice()">
+        <p>
+            <img src="../../assets/imgs/stop.png" width="50" height="50">
+          </p>
+          <p>
+            绑定普通设备
+          </p>
+    </button>
   </div>
-  <ion-item>
-      <ion-label><input class="wifi-password-syle" style="border: 0px;width: 100%" type="password" placeholder="请输入WiFi密码" #wifipassword>
-      </ion-label>
-  </ion-item>
 
-  <div style="text-align: center; margin-top: 30px; margin-left: 30px; margin-right: 30px;font-size: 12px;">
-      <button ion-button block color="primary" (click)="nextButton(wifipassword)">
-        下一步
-      </button>
-    </div>
+  <div id="page-bottom">
+      <button ion-button id="bottom-button" (click)="addWiFiDevice()">
+          <p>
+            <img src="../../assets/imgs/bottom.png" width="50" height="50">
+          </p>
+          <p>
+            绑定WiFi设备
+          </p>
+        </button>
+  </div>
 
 </ion-content>

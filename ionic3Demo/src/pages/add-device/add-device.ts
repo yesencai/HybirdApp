@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams ,LoadingController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NormalDevicePage } from '../normal-device/normal-device'
+import { WifiDevicePage } from '../wifi-device/wifi-device'
+
 
 /**
  * Generated class for the AddDevicePage page.
@@ -15,18 +18,26 @@ import { IonicPage, NavController, NavParams ,LoadingController} from 'ionic-ang
 })
 export class AddDevicePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public loadingCtrl:LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
   }
+ 
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddDevicePage');
+
   }
-  nextButton(wifipassword){
-      let loading = this.loadingCtrl.create({
-			content: "正在连接设备,请等待...",
-			duration: 2000,
-	  	});
-		  loading.present(loading);
+
+  //绑定普通设备
+  addNomalDevice(){
+    this.navCtrl.push(NormalDevicePage);
   }
+
+  //绑定wifi设备
+  addWiFiDevice(){
+    this.navCtrl.push(WifiDevicePage);
+  }
+
+
+
 
 }

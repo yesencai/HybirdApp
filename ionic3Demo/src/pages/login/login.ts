@@ -1,6 +1,6 @@
 
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
+import { Component ,ViewChild} from '@angular/core';
+import { IonicPage, Tabs,NavController, Platform,NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { RegisteredPage } from '../registered/registered';
 import { TabsPage } from '../tabs/tabs';
 import { ResetPswPage } from '../reset-psw/reset-psw';
@@ -9,6 +9,7 @@ import { TTConst } from '../../lib/TTConst'
 import { Tomato } from '../../lib/tomato'
 import { Base64 } from 'js-base64';
 import { Emitter } from '../../other/emitter'
+import { BackButtonProvider } from '../../other/back-button-provider'
 @IonicPage()
 @Component({
 	selector: 'page-login',
@@ -16,10 +17,15 @@ import { Emitter } from '../../other/emitter'
 })
 export class LoginPage {
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato) {
+	@ViewChild('myTabs') tabRef: Tabs;
+
+	constructor(public navCtrl: NavController, public navParams: NavParams, private backButtonService: BackButtonProvider,
+		private platform: Platform,public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato) {
 		let self = this;
 		Emitter.register(this.ttConst.TT_LOGIN_NOTIFICATION_NAME, self.onLoginResponse, self);
-
+		this.platform.ready().then(() => {
+			this.backButtonService.registerBackButtonAction(this.tabRef);
+		  });
 	}
 
 	ionViewDidLoad() {

@@ -16,12 +16,20 @@ export class MyApp {
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,module : DataModule) {
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
+      module.onConnectClick();
       statusBar.styleDefault();
       splashScreen.hide();
       //链接服务器
-      module.onConnectClick();
+      document.addEventListener("resume", () => {
+        statusBar.styleDefault();
+        splashScreen.hide();
+        module.onConnectClick();
+        alert("进入，前台展示"); //进入，前台展示
+
+      }, false);
+      document.addEventListener("pause", () => {
+        alert("退出，后台运行"); //退出，后台运行
+      }, false);
     });
     
   }

@@ -216,20 +216,16 @@ export class Tomato {
               FRecvCallBack(mSrcType, mSrcID, mData);
             } else {
               if (mData.charAt(0) == "H") {
-                mData = mData.substr(1, mData.length - 1); //去掉第1字节
-                var L = (mData.length - 1) / 2;
-                var Ret = new Array();
-                var str = "";
-                for (var i = 0; i < L; ++i) {
-                  Ret[i] = parseInt(mData.substring(i * 2, i * 2 + 2), 16);
-                }
-
-                for (var j = 0; j < Ret.length; j++) {
-                  str += String.fromCharCode(Ret[j]);
-                }
-                FRecvCallBack(mSrcType, mSrcID, str);
-
-              }
+                mData = mData.substr(1, mData.length-1); //去掉第1字节
+                  var L = (mData.length-1)/2;
+                  var str = "";
+                  for(var i = 0; i < L; ++i) 
+                  {
+                    str += "%"+mData.substring( i * 2, i * 2 + 2);
+                  }
+                  FRecvCallBack(mSrcType, mSrcID, decodeURIComponent(str));
+    
+            }
             }
           }
         }
