@@ -14,6 +14,10 @@ export class DataModule {
 
     //链接服务器
     onConnectClick() {
+
+        // var randomInt = this.common.randomInt(1,100000);
+        // this.tool.SdkGetRegistCode(this.OnEventCallback,"1436280001","1004",randomInt);
+
         //l4uattL0H4i
         var HostName = "l4uattL0H4i.iot-as-mqtt.cn-shanghai.aliyuncs.com";
         var HostPort = "443";
@@ -34,6 +38,9 @@ export class DataModule {
     OnLogEchoCallback(LogType, LogCode, LogText) {
         _this.codeMessage(LogText);
         console.log("OnLogEchoCallback:" + LogType + "+" + LogCode + "+" + LogText);
+        if (LogCode == '1') {
+            Emitter.fire(_this.ttConst.TT_MQTTCONNET_NOTIFICATION_NAME, LogCode, LogText);
+        }
     }
 
     OnEventCallback(EventType, EventData) {
@@ -83,6 +90,30 @@ export class DataModule {
             }
             case _this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE: {
                 _this.onGetDeviceListResponse(PackData);
+                break;
+            }
+            case _this.ttConst.ACK_CLIENT_DEL_FIRST_DEVICE: {
+                _this.onRemoveDeviceResponse(PackData);
+                break;
+            }
+            case _this.ttConst.ACK_SET_DEVICE: {
+                _this.onHomeProtectionDeviceResponse(PackData);
+                break;
+            }
+            case _this.ttConst.ACK_CLIENT_GET_HISTOR_FIRST_DEVICE: {
+                _this.onDeviceProtectionDeviceHistroyListResponse(PackData);
+                break;
+            }
+            case _this.ttConst.ACK_CLIENT_SET: {
+                _this.onChangeRemarkDeviceHistroyListResponse(PackData);
+                break;
+            }
+            case _this.ttConst.ACK_SET_DEVICE: {
+                _this.onAddAlarmResponse(PackData);
+                break;
+            }
+            case _this.ttConst.ACK_SETUPDATENOTIFYALARM: {
+                _this.onOffLineDeviceResponse(PackData);
                 break;
             }
         }
@@ -152,28 +183,47 @@ export class DataModule {
         // 外出布防\留守布防\撤防\告警等
         var deviceStat = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_STAT);
         // 别名，自定义名
-        var deviceName= this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_NAME);
+        var deviceName = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_NAME);
         var deviceNotifyalarmPhone1 = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_PHONE1);
         var deviceNotifyalarmPhone2 = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_PHONE2);
-        var deviceNotifyalarmMode= this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_MODE);
+        var deviceNotifyalarmMode = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_MODE);
         //以下不作用于门磁
         var deviceNotifyalarm = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_TIME);
         // 下挂的第二级设备数量      
-        var deviceNumber= this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FSECOND_DEVICE_NUMBER);
+        var deviceNumber = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_FSECOND_DEVICE_NUMBER);
 
         Emitter.fire(this.ttConst.TT_GETDEVICELIST_NOTIFICATION_NAME,
-              deviceId,
-              deviceMode,
-              deviceOnline,
-              deviceStat,
-              deviceName,
-              deviceNotifyalarmPhone1,
-              deviceNotifyalarmPhone2,
-              deviceNotifyalarmMode,
-              deviceNotifyalarm,
-              deviceNumber);
+            deviceId,
+            deviceMode,
+            deviceOnline,
+            deviceStat,
+            deviceName,
+            deviceNotifyalarmPhone1,
+            deviceNotifyalarmPhone2,
+            deviceNotifyalarmMode,
+            deviceNotifyalarm,
+            deviceNumber);
     }
-
+    //删除设备设备成功数据处理
+    onRemoveDeviceResponse(PackData) {
+        var mFlag = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_DEL_FIRST_DEVICE_SUCCESS);
+        var message = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_DEL_FIRST_DEVICE_ERRORINFO);
+        Emitter.fire(this.ttConst.TT_REMOVEDEVICE_NOTIFICATION_NAME, mFlag, message);
+    }
+    //在家布防
+    onHomeProtectionDeviceResponse(PackData) {
+        var mFlag = this.common.getFieldValue(PackData, this.ttConst.ACK_SET_DEVICE_SUCCESS);
+        var message = this.common.getFieldValue(PackData, this.ttConst.ACK_SET_DEVICE_ERRORINFO);
+        Emitter.fire(this.ttConst.TT_HOMEPROTECTION_NOTIFICATION_NAME, mFlag, message);
+    }
+    
+    //获取设备布防历史记录
+    onDeviceProtectionDeviceHistroyListResponse(PackData) {
+        var deviceId = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_HISTOR_FIRST_DEVICEID);
+        var historyTime = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_HISTOR_FIRST_HISTORYTIME);
+        var historyData = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_GET_HISTOR_FIRST_HISTORYDATA);
+        Emitter.fire(this.ttConst.TT_GETDEVICEHISTORYLIST_NOTIFICATION_NAME, deviceId, historyTime, historyData);
+    }
     //获取验证码后的提示信息，失败或成功
     codeMessage(msg) {
         let toast = this.toastCtrl.create({
@@ -182,6 +232,25 @@ export class DataModule {
             position: "top"
         });
         toast.present();
+    }
+    //修改设备别名
+    onChangeRemarkDeviceHistroyListResponse(PackData) {
+        var mFlag = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_SET_SUCCESS);
+        var message = this.common.getFieldValue(PackData, this.ttConst.ACK_CLIENT_SET_ERRORINFO);
+        Emitter.fire(this.ttConst.TT_CHANGEREMARKE_NOTIFICATION_NAME, mFlag, message);
+    }
+    //添加预警
+    onAddAlarmResponse(PackData) {
+        var mFlag = this.common.getFieldValue(PackData, this.ttConst.ACK_SET_DEVICE_SUCCESS);
+        var message = this.common.getFieldValue(PackData, this.ttConst.ACK_SET_DEVICE_ERRORINFO);
+        Emitter.fire(this.ttConst.TT_ADDALARM_NOTIFICATION_NAME, mFlag, message);
+
+    }
+    //设备离线时收到服务器回复
+    onOffLineDeviceResponse(PackData){
+        var mFlag = this.common.getFieldValue(PackData, this.ttConst.ACK_SETUPDATENOTIFYALARM_SUCCESS);
+        var message = this.common.getFieldValue(PackData, this.ttConst.ACK_SETUPDATENOTIFYALARM_ERRORINFO);
+        Emitter.fire(this.ttConst.TT_DEVICEOFFLINE_NOTIFICATION_NAME, mFlag, message);
     }
 
 }

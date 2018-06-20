@@ -20,32 +20,32 @@ export class Common {
     // 解析收到的数据
     getFieldValue(DataStr, FieldID) {
         var iStart, L, Fid, tmp;
-        L=0;
-        Fid=0;
-        iStart=5;
-        var result="";
-        while(iStart<DataStr.length-4){
-            tmp = DataStr.substring(iStart,iStart+4);
-            L = parseInt(tmp,16);
-            tmp = DataStr.substring(iStart+4,iStart+6);
-            Fid = parseInt(tmp,16);
+        L = 0;
+        Fid = 0;
+        iStart = 5;
+        var result = "";
+        while (iStart < DataStr.length - 4) {
+            tmp = DataStr.substring(iStart, iStart + 4);
+            L = parseInt(tmp, 16);
+            tmp = DataStr.substring(iStart + 4, iStart + 6);
+            Fid = parseInt(tmp, 16);
             if (Fid == FieldID) {
-                if (iStart+6+L-2 < DataStr.length) {
-                     result = DataStr.substring(iStart+6, iStart+6+L-2);
+                if (iStart + 6 + L - 2 < DataStr.length) {
+                    result = DataStr.substring(iStart + 6, iStart + 6 + L - 2);
                 } else {
-                    result = DataStr.substring(iStart+6);
+                    result = DataStr.substring(iStart + 6);
                 }
                 return result;
             }
-            iStart = iStart+ L+4;
+            iStart = iStart + L + 4;
         }
         return result;
     }
 
-    disconnect(){
+    disconnect() {
         this.tomato.disconnect;
     }
-    
+
     //通过主页面发送字符串数据包，本函数只能在子页面中调用，不能在主页面调用，否则会出错
     SendStrByParent(DstType, DstID, StrPack) {
         this.tomato.SdkSendStr(DstType, DstID, StrPack);
@@ -120,5 +120,21 @@ export class Common {
         this.loadingIsOpen && this.loading.dismiss();
         this.loadingIsOpen = false;
     };
+
+
+    /*取得某个区间范围内的随机整数*/
+    randomInt(n, m) {
+        var iRnd = Math.floor(Math.random() * (m - n + 1) + n);
+        return iRnd;
+    }
+    //转换时间
+    transDate(n) {
+        var date = new Date(n);
+        var Y = date.getFullYear() + '-';
+        var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+        var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+        return (Y + M + D)
+    }
+
 
 }

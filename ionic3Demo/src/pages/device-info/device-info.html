@@ -19,7 +19,7 @@
 			</ion-avatar>
 			<h2>{{userInfo?.title}}</h2>
 		    <p>设备ID：{{userInfo?.deviceId}}</p>
-			<p class="statue-protection">{{item?.protectionState ? "已布防" : "已撤防"}}</p>
+			<p class="statue-protection">{{userInfo?.protectionState}}</p>
 		</ion-item>
 
 		<button ion-item (click)="seleteItem(item)" *ngFor="let item of listData">
@@ -27,7 +27,7 @@
             </button>
 	</ion-list>
 	<div style="text-align: center; margin-left: 30px; margin-right: 30px;">
-			<button ion-button block color="primary" (deleteDevice)="logIn()">
+			<button ion-button block color="primary" (click)="deleteDevice()">
 			  删除设备
 			</button>
 		  </div>

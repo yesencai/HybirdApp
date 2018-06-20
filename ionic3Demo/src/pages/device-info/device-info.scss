@@ -15,4 +15,7 @@ page-device-info {
     .item-inner{
         border-bottom: 0px;
     }
+    headerItem item item-block item-md, label label-md{
+        pointer-events:auto;
+    }
 }

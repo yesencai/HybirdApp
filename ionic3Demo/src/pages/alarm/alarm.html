@@ -18,16 +18,16 @@
 	<ion-list>
   <ion-item>
 	  <ion-label class = "priority-style">报警优先级</ion-label>
-      <ion-select [(ngModel)]="priority" cancelText="取消" okText="确认" class = "item-note">
-      <ion-option value="短信" selected = "true">短信</ion-option>
-      <ion-option value="电话">电话</ion-option>
+      <ion-select [(ngModel)]="alarmPriority" cancelText="取消" okText="确认" class = "item-note">
+      <ion-option value="sms" selected = "true">短信</ion-option>
+      <ion-option value="phone">电话</ion-option>
     </ion-select>
   </ion-item>
   <ion-item (click)="chooseNumber()">
 	  <ion-label class = "priority-style">多电话</ion-label>
-      <ion-buttons  item-right class = "some-number-style">{{phoneNumber}}</ion-buttons>
+      <ion-buttons  item-right class = "some-number-style">{{phoneNumber1 + nbsp + phoneNumber2}}</ion-buttons>
   </ion-item>
-  <ion-item>
+  <!-- <ion-item>
 	  <ion-label class = "priority-style">报警铃声</ion-label>
       <ion-select [(ngModel)]="bell" cancelText="取消" okText="确认" class = "item-note">
       <ion-option value="天空之城" selected = "true">天空之城</ion-option>
@@ -38,24 +38,32 @@
       <ion-option value="淘汰">淘汰</ion-option>
       <ion-option value="冬天的秘密">冬天的秘密</ion-option>
     </ion-select>
-  </ion-item>
+  </ion-item> -->
   
     <ion-item>
 	  <ion-label class = "priority-style">通知间隔</ion-label>
-      <ion-select [(ngModel)]="time" cancelText="取消" okText="确认" class = "item-note">
-      <ion-option value="10分钟" >10分钟</ion-option>
-      <ion-option value="20分钟" >20分钟</ion-option>
-      <ion-option value="30分钟" >30分钟</ion-option>
-      <ion-option value="半小时" >半小时</ion-option>
-      <ion-option value="一小时" >一小时</ion-option>
-      <ion-option value="两分钟" >两分钟</ion-option>
-      <ion-option value="一天" selected = "true">一天</ion-option>
+      <ion-select [(ngModel)]="notifyInterval" cancelText="取消" okText="确认" class = "item-note">
+      <ion-option value="tenMinute" >10分钟</ion-option>
+      <ion-option value="twentyMinute" >20分钟</ion-option>
+      <ion-option value="thirtyMinute" >30分钟</ion-option>
+      <ion-option value="oneHour" >一小时</ion-option>
+      <ion-option value="twoHour" >两小时</ion-option>
+      <ion-option value="oneDay" selected = "true">一天</ion-option>
 
     </ion-select>
   </ion-item>
   <ion-item>
-      <ion-label class = "priority-style">误触告警取消</ion-label>
-      <ion-toggle value="foo" checked="true"></ion-toggle>
+	  <ion-label class = "priority-style">布防方式</ion-label>
+      <ion-select [(ngModel)]="protectionWay" cancelText="取消" okText="确认" class = "item-note">
+      <ion-option value="撤防" selected = "true">撤防</ion-option>
+      <ion-option value="外出布防">外出布防</ion-option>
+      <ion-option value="在家布防">在家布防</ion-option>
+      <ion-option value="其他">其他</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+      <ion-label class = "priority-style">紧急告警</ion-label>
+      <ion-toggle value="foo" (ionChange)="toggleFun()"></ion-toggle>
     </ion-item>
 </ion-list>
 

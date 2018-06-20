@@ -6,6 +6,7 @@ import { TTConst } from '../../lib/TTConst'
 import { Tomato } from '../../lib/tomato'
 import { Base64 } from 'js-base64';
 import { Emitter } from "../../other/emitter";
+import { Storage } from '@ionic/storage'
 
 
 /**
@@ -22,7 +23,9 @@ import { Emitter } from "../../other/emitter";
 })
 export class RegisteredPage {
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato) {
+	userName;
+	passWord;
+	constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato,public storage : Storage) {
 		let self = this;
 		Emitter.register(ttConst.TT_REGISTED_NOTIFICATION_NAME, self.onRegistResponse, self);
 
@@ -66,7 +69,8 @@ export class RegisteredPage {
 		} else {
 			let userinfo: string = '用户名：' + username.value + '密码：' + password.value;
 			if (userinfo.length > 0) {
-
+				this.userName = username.value;
+				this.passWord = password.value;
 				this.common.showLoading("注册中...");
 				var dat = this.common.MakeHeader(this.ttConst.CLIENT_RAGISTER) +
 					this.common.MakeParam(this.ttConst.CLIENT_RAGISTER_USERNAME, username.value) +
@@ -127,6 +131,8 @@ export class RegisteredPage {
 	onRegistResponse(name, flag, msg) {
 		this.common.hideLoading();
 		if (flag == '1') {
+			this.storage.set("loginname", this.userName);
+			this.storage.set("password", this.passWord);
 			this.navCtrl.setRoot(TabsPage)
 		} else {
 			this.codeMessage(msg)

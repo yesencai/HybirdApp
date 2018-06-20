@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { IonicStorageModule } from '@ionic/storage'
 
 import { DevicePage } from '../pages/device/device';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -57,7 +58,9 @@ import { WifiDevicePage } from '../pages/wifi-device/wifi-device'
     tabsHideOnSubPages: 'true',
     backButtonText: '',//按钮内容
     backButtonIcon: 'arrow-dropleft-circle',//按钮图标样式
-    })
+    }),
+    IonicStorageModule.forRoot(),
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [

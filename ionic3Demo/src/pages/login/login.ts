@@ -10,6 +10,8 @@ import { Tomato } from '../../lib/tomato'
 import { Base64 } from 'js-base64';
 import { Emitter } from '../../other/emitter'
 import { BackButtonProvider } from '../../other/back-button-provider'
+import { Storage } from '@ionic/storage'
+
 @IonicPage()
 @Component({
 	selector: 'page-login',
@@ -18,16 +20,16 @@ import { BackButtonProvider } from '../../other/back-button-provider'
 export class LoginPage {
 
 	@ViewChild('myTabs') tabRef: Tabs;
-
+	userName;
+	passWord;
 	constructor(public navCtrl: NavController, public navParams: NavParams, private backButtonService: BackButtonProvider,
-		private platform: Platform,public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato) {
+		private platform: Platform,public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato,public storage : Storage) {
 		let self = this;
 		Emitter.register(this.ttConst.TT_LOGIN_NOTIFICATION_NAME, self.onLoginResponse, self);
 		this.platform.ready().then(() => {
 			this.backButtonService.registerBackButtonAction(this.tabRef);
 		  });
 	}
-
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad LoginPage');
 	}
@@ -56,7 +58,8 @@ export class LoginPage {
 		} else {
 			let userinfo: string = '用户名：' + username.value + '密码：' + password.value;
 			if (userinfo.length > 0) {
-
+				this.userName = username.value;
+				this.passWord = password.value;
 				this.common.showLoading("登录中...");
 				var dat = this.common.MakeHeader(this.ttConst.CLIENT_LOGIN) +
 					this.common.MakeParam(this.ttConst.CLIENT_LOGIN_USERNAME, username.value) +
@@ -81,9 +84,11 @@ export class LoginPage {
 	onLoginResponse(name, flag, msg) {
 		this.common.hideLoading();
 		if (flag == '1') {
-			this.navCtrl.setRoot(TabsPage)
+			this.storage.set("loginname", this.userName);
+			this.storage.set("password", this.passWord);
+			this.navCtrl.setRoot(TabsPage);
 		} else {
-			this.codeMessage(msg)
+			this.codeMessage(msg);
 		}
 	}
 	//获取验证码后的提示信息，失败或成功

@@ -1,3 +1,4 @@
+
 <ion-header>
 	<ion-navbar color="primary" no-border-bottom>
 		<ion-title>设备列表</ion-title>
@@ -33,23 +34,20 @@
      	时间：2018-05-16
      	描述：设备list列表
 	 -->
-	 <ion-refresher (ionRefresh)="doRefresh($event)"> 
-			<ion-refresher-content
-				pullingIcon="arrow-dropdown"
-				pullingText="下拉刷新"
-				refreshingSpinner="circles"
-				refreshingText="刷新..."> 
-			</ion-refresher-content>
-			<ion-refresher-content > 
+	 <ion-refresher (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content
+		  pullingIcon="arrow-dropdown"
+		  pullingText="下拉刷新"
+		  refreshingSpinner="circles"
+		  refreshingText="正在刷新">
 		</ion-refresher-content>
-		</ion-refresher>
+	  </ion-refresher>
 
 	<div [ngSwitch]="testSegment">
 		<div *ngSwitchCase="'在线设备'">
 
-
 			<ion-list class="device-list">
-				<a *ngFor="let item of listData">
+				<a *ngFor="let item of onlineData">
 					<ion-item-sliding class="siding-type">
 						<ion-item (click)="deviceInfo(item)" style="padding-left:16px;">
 							<ion-avatar item-left>
@@ -62,38 +60,31 @@
 							<ion-icon item-right>{{item?.onlineState}}</ion-icon>
 						</ion-item>
 						<ion-item class="buttom-toobar">
-							<button class="button button-position" color = "light" ion-button id="removal-style" (click)="removal($event,item)">
-								<ion-icon name="unlocked"></ion-icon>
+							<button class="button button-position" color="light" ion-button id="removal-style" (click)="removal($event,item)">
+								<ion-icon name="close-circle"></ion-icon>
 								撤防
 							</button>
 							<button class="button button-position" color="light" ion-button id="out-protection-style" (click)="outProtection($event,item)">
-								<ion-icon name="location"></ion-icon>
+								<ion-icon name="alarm"></ion-icon>
 								外出布防
 							</button>
-							<button class="button button-position delete-button-style" color="light" ion-button id="home-protection-style" (click)="homeProtection($event,item)">
+							<button class="button button-position" color="light" ion-button id="home-protection-style" (click)="homeProtection($event,item)">
 								<ion-icon name="home"></ion-icon>
 								在家布防
 							</button>
 						</ion-item>
-						<!-- <ion-item-options>
-							<button class="delete-button-style-online" (click)="removeItem(item)">
-								<ion-icon trash></ion-icon> 删除</button>
-						</ion-item-options> -->
-
 					</ion-item-sliding>
 
 				</a>
 			</ion-list>
-			<!--下滑的时候，加载数据-->
-		
+			
 		</div>
 
 		<div *ngSwitchCase="'离线设备'">
 			<ion-list class="device-list">
-				<a *ngFor="let item of listData">
+				<a *ngFor="let item of offlineData">
 					<ion-item-sliding class="siding-type">
-						<ion-item>
-
+						<ion-item (click)="deviceInfo(item)">
 							<ion-avatar item-left>
 								<img [src]="item?.deviceImg" style="size: 50px;">
 							</ion-avatar>
@@ -104,17 +95,30 @@
 							<button style="margin-right: 0;" class="button button-position delete-button-style" item-right (click)="removeItem($event,item)">
 								删除</button>
 						</ion-item>
-
+						<ion-item class="buttom-toobar">
+							<button class="button button-position" color="light" ion-button id="removal-style" (click)="offlineRemoval($event,item)">
+								<ion-icon name="close-circle"></ion-icon>
+								撤防
+							</button>
+							<button class="button button-position" color="light" ion-button id="out-protection-style" (click)="offlineOutProtection($event,item)">
+								<ion-icon name="alarm"></ion-icon>
+								外出布防
+							</button>
+							<button class="button button-position" color="light" ion-button id="home-protection-style" (click)="offlineHomeProtection($event,item)">
+								<ion-icon name="home"></ion-icon>
+								在家布防
+							</button>
+						</ion-item>
 					</ion-item-sliding>
 
 				</a>
 			</ion-list>
 		</div>
 	</div>
-	<ion-infinite-scroll (ionInfinite)="doInfinite($event)"> 
+	<!-- <ion-infinite-scroll (ionInfinite)="doInfinite($event)"> 
 			<ion-infinite-scroll-content
 			 loadingSpinner="bubbles"
 			 loadingText="加载中..."> 
 			 </ion-infinite-scroll-content> 
-		 </ion-infinite-scroll>
+		 </ion-infinite-scroll> -->
 </ion-content>

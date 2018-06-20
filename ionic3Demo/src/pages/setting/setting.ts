@@ -10,7 +10,7 @@ import { TTConst } from '../../lib/TTConst'
 import { Tomato } from '../../lib/tomato'
 import { Base64 } from 'js-base64';
 import { Emitter } from '../../other/emitter'
-
+import { Storage } from '@ionic/storage'
 /**
  * Generated class for the SettingPage page.
  *
@@ -26,18 +26,20 @@ import { Emitter } from '../../other/emitter'
 
 export class SettingPage {
 
-
 	headimage: string = "./assets/imgs/logo.png";
 	name: string = "未填写";
 	mobile: string = "未填写";
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public alerCtrl: AlertController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato, public toastCtrl: ToastController) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public alerCtrl: AlertController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato, public toastCtrl: ToastController,public storage : Storage) {
 		let self = this;
 		Emitter.register(this.ttConst.TT_EXIT_NOTIFICATION_NAME, self.onExitResponse, self);
 	}
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad SettingPage');
+		this.storage.get('loginname').then((value) => {
+			this.mobile = value;
+		});
 	}
 
 	//y页面将要离开
@@ -91,10 +93,11 @@ export class SettingPage {
 		});
 		confirm.present()
 	}
-	//登录成功后的回调
+	//退出成功后的回调
 	onExitResponse(name, flag, msg) {
 		this.common.hideLoading();
 		if (flag == '1') {
+			this.storage.clear();
 			this.events.publish('toLogin');
 		} else {
 			this.codeMessage(msg)

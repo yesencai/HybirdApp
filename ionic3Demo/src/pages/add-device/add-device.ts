@@ -19,8 +19,8 @@ import { WifiDevicePage } from '../wifi-device/wifi-device'
 export class AddDevicePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
+  
   }
- 
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddDevicePage');

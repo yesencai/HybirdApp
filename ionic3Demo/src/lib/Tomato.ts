@@ -25,6 +25,8 @@ const EV_GetTopicSuccess = 5;
 const EV_GetTopicFail = 6;
 const EV_ReleaseTopicSuccess = 7;
 const EV_RecvBeatPack = 8;
+const EV_GetRegistCode = 9;
+
 
 //当事件为EV_Disconnect时的数据
 const EVDATA_CONN_LOST = "1"; //掉线了
@@ -40,6 +42,7 @@ var FLogEchoCallBack = null;
 var FEventCallBack = null;
 var FRecvCallBack = null;
 var FDeveloperID = null;
+var FAppID = null;
 var FCustomData = null;
 var FMqttClient = null;
 
@@ -52,13 +55,13 @@ var FMqttParamsInited = false;
 
 var FWillDisconnect = false;
 
-var connected = false;
 
 var _this;
 
 @Injectable()
 export class Tomato {
 
+  connected = false;
   DSTTYPE_SERVER: number = 2;     //发送给应用服务器，这里的值有两种，0和2，
   //当服务器是使用普通的设备来实现时填写2，
   //当服务器是使用消息队列来实现时填写0
@@ -135,7 +138,10 @@ export class Tomato {
 
     //var statusSpan = document.getElementById("connectionStatus");
     //statusSpan.innerHTML = "Connected to: " + context.invocationContext.host + ':' + context.invocationContext.port + context.invocationContext.path + ' as ' + context.invocationContext.clientId;
-    connected = true;
+    _this.connected = true;
+    if (FHostName == "www.tomato8848.net") {
+      _this.SendGetRegCode();
+    }
   }
 
   /*当连接失败时的回调函数*/
@@ -152,7 +158,7 @@ export class Tomato {
     }
     //var statusSpan = document.getElementById("connectionStatus");
     //statusSpan.innerHTML = "Failed to connect: " + context.errorMessage;
-    connected = false;
+    _this.connected = false;
   }
 
   /*当连接掉线时的回调函数*/
@@ -184,7 +190,7 @@ export class Tomato {
     //}
 
     FWillDisconnect = false;
-    connected = false;
+    _this.connected = false;
   }
 
   /*当收到消息时的回调函数*/
@@ -206,7 +212,10 @@ export class Tomato {
         mDstID = mJsonObject.did;
         mData = mJsonObject.data;
 
-        if (mDstID == FDeviceName) { //只处理属于自己的数据
+        if (mSrcID == "Regist_Server") {
+          FRecvCallBack(EV_GetRegistCode, mData.substr(1, mData.length - 1)); //去掉第1字节; 
+          _this.disconnect();
+        } else if (mDstID == FDeviceName) { //只处理属于自己的数据
           if (mData.length > 1) {
             //诸智云发过来的数据第一个字节用于表示数据种类，因此长度肯定大于1。
             //第1字节是S时表示这是一个普通的字符串，
@@ -216,16 +225,15 @@ export class Tomato {
               FRecvCallBack(mSrcType, mSrcID, mData);
             } else {
               if (mData.charAt(0) == "H") {
-                mData = mData.substr(1, mData.length-1); //去掉第1字节
-                  var L = (mData.length-1)/2;
-                  var str = "";
-                  for(var i = 0; i < L; ++i) 
-                  {
-                    str += "%"+mData.substring( i * 2, i * 2 + 2);
-                  }
-                  FRecvCallBack(mSrcType, mSrcID, decodeURIComponent(str));
-    
-            }
+                mData = mData.substr(1, mData.length - 1); //去掉第1字节
+                var L = (mData.length - 1) / 2;
+                var str = "";
+                for (var i = 0; i < L; ++i) {
+                  str += "%" + mData.substring(i * 2, i * 2 + 2);
+                }
+                FRecvCallBack(mSrcType, mSrcID, decodeURIComponent(str));
+
+              }
             }
           }
         }
@@ -273,7 +281,7 @@ export class Tomato {
     //echoDebugInfo('Disconnecting from Server');
     FWillDisconnect = true;
     FMqttClient.disconnect();
-    connected = false;
+    _this.connected = false;
   }
 
   /* 对某个数据进行HmacSHA1加密，在调用本函数前必须加载crypto-js.js这个文件 */
@@ -472,5 +480,53 @@ export class Tomato {
     return 0;
   }
 
+  //DeveloperID AppID 不同的项目不同的值
+  // CustomID唯一的不会变
+  //DeveloperID=1436280001，AppID=1004
+  SdkGetRegistCode(EventCallBack, DeveloperID, AppID, CustomID) {
+    FEventCallBack = EventCallBack;
+    FDeveloperID = DeveloperID;
+    FAppID = AppID;
+    FCustomData = CustomID;
+    // FHostName = "www.tomato8848.net";
+    FHostName = "192.168.3.52";
+    FHostPort = "1883";
+    FProductKey = "reg";
+    FDeviceName = "0";
+    FDeviceSecret = "0";
+    _this.connect(FHostName, FHostPort, "8848", "/ws", "RegClient", "tomato", 60, 3, true, true);
+    FMqttParamsInited = true;
+
+  }
+
+  SendGetRegCode() {
+    var StrPack = "1001 " +
+      _this.MakeParam(1, FDeveloperID) +
+      _this.MakeParam(2, FCustomData) +
+      _this.MakeParam(3, "123456") +
+      _this.MakeParam(4, FAppID) +
+      _this.MakeParam(5, "1502") +
+      _this.MakeParam(6, "C") +
+      _this.MakeParam(7, "") +
+      _this.MakeParam(8, "V0.12");
+      _this.SdkSendStr("0", "Regist_Server", StrPack);
+  }
+
+  //对把参数打包成“长度+ID+参数值”的格式
+  MakeParam(ParamID, ParamValue) {
+    var mLen, mID, p;
+    var iLen = ParamValue.length + 2;
+
+    p = '';
+    if (iLen < 65536) {
+      mLen = iLen.toString(16).toUpperCase();
+      while (mLen.length < 4) mLen = "0" + mLen;
+      mID = ParamID.toString(16).toUpperCase();
+      if (mID.length < 2) mID = "0" + mID;
+      p = mLen + mID + ParamValue
+    }
+
+    return p;
+  }
 
 }

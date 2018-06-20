@@ -17,12 +17,35 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 export class AlarmNumberPage {
 
   listData = [];
+  // phoneNumber1;
+  // phoneNumber2;
+  public callback: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+    // this.phoneNumber1 = navParams.get('phoneNumber1')
+    // this.phoneNumber2 = navParams.get('phoneNumber2')
+    // if (this.phoneNumber1 === '未填写') {
+    //   this.phoneNumber1 = '';
+    // }
+    // if (this.phoneNumber1) {
+    //   this.listData.push(this.phoneNumber1);
+    // }
+    // if (this.phoneNumber2) {
+    //   this.listData.push(this.phoneNumber2);
+    // }
+    this.callback = this.navParams.get("callback")
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AlarmNumberPage');
   }
+  saveSetting() {
+    this.callback(this.listData).then(() => {
+      // pop返回方法
+      this.navCtrl.pop();
+    });
+  }
+
   //添加电话号码
   addNumber() {
     let prompt = this.alertCtrl.create({
@@ -42,6 +65,8 @@ export class AlarmNumberPage {
         handler: data => {
           if (data.title.length > 0) {
             this.listData.push(data.title);
+            // this.phoneNumber1 = data.title;
+            // this.phoneNumber2 = data.title;
           }
         }
       }
@@ -51,13 +76,13 @@ export class AlarmNumberPage {
   }
 
   //删除电话号码
-  removeNumber(event,item) {
+  removeNumber(event, item) {
     event.stopPropagation();
-		for(var i = 0; i < this.listData.length; i++) {
-			if(item == this.listData[i]) {
-				this.listData.splice(i, 1);
-			}
-		}
+    for (var i = 0; i < this.listData.length; i++) {
+      if (item == this.listData[i]) {
+        this.listData.splice(i, 1);
+      }
+    }
   }
 
 }

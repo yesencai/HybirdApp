@@ -6,6 +6,8 @@ import { TTConst } from '../../lib/TTConst'
 import { Tomato } from '../../lib/tomato'
 import { Base64 } from 'js-base64';
 import { Emitter } from '../../other/emitter'
+import { Storage } from '@ionic/storage'
+
 /**
  * Generated class for the ChangePswPage page.
  *
@@ -20,7 +22,8 @@ import { Emitter } from '../../other/emitter'
 })
 export class ChangePswPage {
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato) {
+	passWord;
+	constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato,public storage : Storage) {
 		var self = this;
 		Emitter.register(this.ttConst.TT_CHAGEPASSWORD_NOTIFICATION_NAME, self.onChangePaswgeResponse, self);
 	}
@@ -51,6 +54,7 @@ export class ChangePswPage {
 			});
 			toast.present();
 		} else {
+			this.passWord = newpassword;
 			this.common.showLoading("登录中...");
 			var dat = this.common.MakeHeader(this.ttConst.CLIENT_UPDATEPWD) +
 				this.common.MakeParam(this.ttConst.CLIENT_UPDATEPWD_OLD, oldpassword.value) +
@@ -61,6 +65,7 @@ export class ChangePswPage {
 	onChangePaswgeResponse(name, flag, msg) {
 		this.common.hideLoading();
 		if (flag == '1') {
+			this.storage.set("password", this.passWord);
 			this.navCtrl.setRoot(TabsPage)
 		} else {
 			this.codeMessage(msg)

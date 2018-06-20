@@ -7,6 +7,8 @@ import { Tomato } from '../../lib/tomato'
 import { Base64 } from 'js-base64';
 import { Emitter } from '../../other/emitter'
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { Storage } from '@ionic/storage'
+
 /**
  * Generated class for the ResetPswPage page.
  *
@@ -20,7 +22,8 @@ import { AlertController } from 'ionic-angular/components/alert/alert-controller
 })
 export class ResetPswPage {
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato,public alerCtrl:AlertController) {
+
+	constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato,public alerCtrl:AlertController,public storage : Storage) {
 		let self = this;
 		Emitter.register(ttConst.TT_RESETPASSWORD_NOTIFICATION_NAME, self.onResetPawResponse, self);
 
@@ -109,6 +112,7 @@ export class ResetPswPage {
 	onResetPawResponse(name, flag, msg) {
 		this.common.hideLoading();
 		if (flag == '1') {
+			this.storage.set("password", "123456");
 			this.doConfirm();
 		} else {
 			this.codeMessage(msg)
