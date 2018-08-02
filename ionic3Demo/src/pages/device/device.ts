@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController, Alert } from 'ionic-angular';
 import { DeviceInfoPage } from '../device-info/device-info';
-import { AddDevicePage } from '../add-device/add-device';
+import { NormalDevicePage } from '../normal-device/normal-device';
 import { Common } from '../../lib/Common'
 import { TTConst } from '../../lib/TTConst'
 import { Tomato } from '../../lib/tomato'
 import { Base64 } from 'js-base64';
 import { Emitter } from '../../other/emitter'
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { RegistCode } from '../../other/registCode'
+import { PopoverController } from 'ionic-angular/components/popover/popover-controller';
+import { PopoverPage } from '../popover/popover'
 /**
  * Generated class for the DevicePage page.
  *
@@ -20,7 +23,11 @@ import { AlertController } from 'ionic-angular/components/alert/alert-controller
 	selector: 'page-device',
 	templateUrl: 'device.html',
 })
+
+
 export class DevicePage {
+	@ViewChild('popoverContent', { read: ElementRef }) content: ElementRef;
+	@ViewChild('popoverText', { read: ElementRef }) text: ElementRef;
 	showGreeting: Boolean = false;
 	listData = [];
 	onlineData = [];
@@ -29,7 +36,19 @@ export class DevicePage {
 	testSegment: string = this.testArray[0];
 	device;
 	deviceOnline: boolean; //判断设备是否在线。
-	constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato, public alerCtrl: AlertController) {
+	applicationInterval: any;
+	deviceStatu: any
+	constructor(public serve: RegistCode, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato, public alerCtrl: AlertController, public popoverCtrl: PopoverController) {
+		
+	}
+	ionViewDidLoad() {
+
+		console.log('ionViewDidLoad DevicePage');
+		if (this.tomato.connected == true) {
+			this.getDeviceList();
+		}
+	}
+	ionViewWillEnter() {
 		let self = this;
 		Emitter.register(this.ttConst.TT_GETDEVICELIST_NOTIFICATION_NAME, self.onGetDeviceListResponse, self);
 		Emitter.register(this.ttConst.TT_REMOVEDEVICE_NOTIFICATION_NAME, self.onRemoveDeviceResponse, self);
@@ -37,39 +56,33 @@ export class DevicePage {
 		Emitter.register(this.ttConst.TT_MQTTCONNET_NOTIFICATION_NAME, self.mqttOnConnet, self);
 		Emitter.register(this.ttConst.TT_DEVICEOFFLINE_NOTIFICATION_NAME, self.onDeviceOffLineResponse, self);
 		Emitter.register(this.ttConst.TT_HOMEPROTECTION_NOTIFICATION_NAME, self.onHomeProtectionDeviceResponse, self);
-
-	}
-	ionViewDidLoad() {
-		console.log('ionViewDidLoad DevicePage');
-		if (this.tomato.connected == true) {
-			this.getDeviceList();
-		}
-	}
-	ionViewWillEnter() {
+		Emitter.register(this.ttConst.TT_AddDeviceNotification, self.addDeviceNotifa, self);
+		Emitter.register(this.ttConst.TT_CancelPoliceNotification, self.cancelPoliceNotifa, self);
 		this.showAdddDevieButton();
 	}
 	//y页面将要离开
-	ionViewWillUnload() {
+	ionViewWillLeave() {
 		console.log(this + '界面销毁');
 		let self = this;
 		Emitter.remove(this.ttConst.TT_GETDEVICELIST_NOTIFICATION_NAME, self.removeEmitter, self);
 		Emitter.remove(this.ttConst.TT_REMOVEDEVICE_NOTIFICATION_NAME, self.removeEmitter, self);
 		Emitter.remove(this.ttConst.TT_HOMEPROTECTION_NOTIFICATION_NAME, self.removeEmitter, self);
 		Emitter.remove(this.ttConst.TT_MQTTCONNET_NOTIFICATION_NAME, self.removeEmitter, self);
-		Emitter.remove(this.ttConst.TT_OUTPROTECTION_NOTIFICATION_NAME, self.removeEmitter, self);
-		Emitter.remove(this.ttConst.TT_REMOAVAL_NOTIFICATION_NAME, self.removeEmitter, self);
+		Emitter.remove(this.ttConst.TT_ADDALARM_NOTIFICATION_NAME, self.removeEmitter, self);
 		Emitter.remove(this.ttConst.TT_DEVICEOFFLINE_NOTIFICATION_NAME, self.removeEmitter, self);
+		Emitter.remove(this.ttConst.TT_AddDeviceNotification, self.removeEmitter, self);
+		Emitter.remove(this.ttConst.TT_CancelPoliceNotification, self.removeEmitter, self);
 
 	}
 	//获取设备列表
 	getDeviceList() {
 		var dat = this.common.MakeHeader(this.ttConst.CLIENT_GET_FIRST_DEVICE)
-		this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, "", dat);
+		this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, this.serve.getServeId(), dat);
 	}
 
 	//搜索添加设备
 	addDevice() {
-		this.navCtrl.push(AddDevicePage);
+		this.navCtrl.push(NormalDevicePage);
 		this.showAdddDevieButton();
 
 	}
@@ -87,7 +100,7 @@ export class DevicePage {
 		this.device = item;
 		this.doConfirm(this.device.deviceId);
 		event.stopPropagation();
-		
+
 	}
 	doConfirm(deviceId) {
 		let confirm = this.alerCtrl.create({
@@ -107,7 +120,7 @@ export class DevicePage {
 						var dat = this.common.MakeHeader(this.ttConst.CLIENT_DEL_FIRST_DEVICE) +
 							this.common.MakeParam(this.ttConst.CLIENT_DEL_FIRST_DEVICE_ID, deviceId) +
 							this.common.MakeParam(this.ttConst.CLIENT_DEL_SECOND_DEVICE_WHETHER, '1');
-						this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, "", dat);
+						this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, this.serve.getServeId(), dat);
 					}
 				},
 				{
@@ -117,14 +130,14 @@ export class DevicePage {
 						var dat = this.common.MakeHeader(this.ttConst.CLIENT_DEL_FIRST_DEVICE) +
 							this.common.MakeParam(this.ttConst.CLIENT_DEL_FIRST_DEVICE_ID, deviceId) +
 							this.common.MakeParam(this.ttConst.CLIENT_DEL_SECOND_DEVICE_WHETHER, '0');
-						this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, "", dat);
+						this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, this.serve.getServeId(), dat);
 					}
 				}
 			]
 		});
-		
+
 		confirm.present()
-		
+
 	}
 	//判断是否显示添加设备按钮
 	showAdddDevieButton() {
@@ -137,9 +150,10 @@ export class DevicePage {
 		this.device = item;
 		//设备在线
 		var dat = this.common.MakeHeader(this.ttConst.SET_DEVICE) +
-			this.common.MakeParam(this.ttConst.SET_DEVICE_DEFENSE, "3");
+			this.common.MakeParam(this.ttConst.SET_DEVICE_DEFENSE, "0");
 		this.common.SendStrByParent(this.tomato.DSTTYPE_DEVCLI, this.device.deviceId, dat);
 		this.Timeout(item, "0");
+		this.deviceStatu = "撤防";
 
 	}
 	//外出布防
@@ -147,11 +161,16 @@ export class DevicePage {
 		this.common.showLoading("布防中...");
 		this.deviceOnline = true;
 		this.device = item;
+		// var dat = this.common.MakeHeader(this.ttConst.SET_DEVICE) +
+		// 	this.common.MakeParam(this.ttConst.SET_DEVICE_DEFENSE, "3");
+		// this.common.SendStrByParent(this.tomato.DSTTYPE_DEVCLI, this.device.deviceId, dat);
 		//设备在线
 		var dat = this.common.MakeHeader(this.ttConst.SET_DEVICE) +
 			this.common.MakeParam(this.ttConst.SET_DEVICE_DEFENSE, "2");
 		this.common.SendStrByParent(this.tomato.DSTTYPE_DEVCLI, this.device.deviceId, dat);
 		this.Timeout(item, "2");
+		this.deviceStatu = "外出布防";
+
 
 	}
 	//在家布防
@@ -159,11 +178,15 @@ export class DevicePage {
 		this.common.showLoading("布防中...");
 		this.deviceOnline = true;
 		this.device = item;
+		// var dat = this.common.MakeHeader(this.ttConst.SET_DEVICE) +
+		// 	this.common.MakeParam(this.ttConst.SET_DEVICE_DEFENSE, "3");
+		// this.common.SendStrByParent(this.tomato.DSTTYPE_DEVCLI, this.device.deviceId, dat);
 		//设备在线
 		var dat = this.common.MakeHeader(this.ttConst.SET_DEVICE) +
 			this.common.MakeParam(this.ttConst.SET_DEVICE_DEFENSE, "1");
 		this.common.SendStrByParent(this.tomato.DSTTYPE_DEVCLI, this.device.deviceId, dat);
 		this.Timeout(item, "1");
+		this.deviceStatu = "在家布防";
 
 	}
 
@@ -178,7 +201,7 @@ export class DevicePage {
 		deviceNotifyalarmPhone2,
 		deviceNotifyalarmMode,
 		deviceNotifyalarm,
-		deviceNumber) {
+		deviceNumber, deviceAddress, deviceAlarmStat) {
 		if (deviceStat == '1') {
 			deviceStat = '在家布防';
 		} else if (deviceStat == '0') {
@@ -186,29 +209,53 @@ export class DevicePage {
 		} else if (deviceStat == '2') {
 			deviceStat = '室外布防';
 		} else {
-			deviceStat = '其他布防';
+			deviceStat = '紧急报警';
 		}
 		this.listData.push({
 			deviceImg: "./assets/imgs/logo.png",
 			electricity: "90%",
+			deviceMode:deviceMode,
 			title: deviceName,
 			deviceId: deviceId,
 			count: deviceNumber,
 			protectionState: deviceStat,
 			onlineState: deviceOnline,
-			onlineStype: deviceOnline
+			onlineStype: deviceOnline,
+			address: deviceAddress,
+			deviceAlarmStat: deviceAlarmStat
 		});
+		var a;
+		var b;
+		for (a = 0; a < this.onlineData.length; a++) {
+			for (x = b + 1; b < this.onlineData.length; b++) {
+				if (this.listData[a].deviceId == this.listData[b].deviceId) {
+					this.listData.splice(b, 1)
+				}
+			}
+		}
 		if (deviceOnline == "Online") {
 			this.onlineData.push({
 				deviceImg: "./assets/imgs/logo.png",
 				electricity: "90%",
 				title: deviceName,
 				deviceId: deviceId,
+				deviceMode:deviceMode,
 				count: deviceNumber,
 				protectionState: deviceStat,
 				onlineState: deviceOnline,
-				onlineStype: deviceOnline
+				onlineStype: deviceOnline,
+				address: deviceAddress,
+				deviceAlarmStat: deviceAlarmStat
 			});
+			var i;
+			var x;
+			for (i = 0; i < this.onlineData.length; i++) {
+				for (x = i + 1; x < this.onlineData.length; x++) {
+					if (this.onlineData[i].deviceId == this.onlineData[x].deviceId) {
+						this.onlineData.splice(x, 1)
+					}
+				}
+			}
 		} else {
 			this.offlineData.push({
 				deviceImg: "./assets/imgs/logo.png",
@@ -216,10 +263,23 @@ export class DevicePage {
 				title: deviceName,
 				deviceId: deviceId,
 				count: deviceNumber,
+				deviceMode:deviceMode,
 				protectionState: deviceStat,
 				onlineState: deviceOnline,
-				onlineStype: deviceOnline
+				onlineStype: deviceOnline,
+				address: deviceAddress,
+				deviceAlarmStat: deviceAlarmStat
 			});
+			var i;
+			var x;
+			for (i = 0; i < this.offlineData.length; i++) {
+				for (x = i + 1; x < this.offlineData.length; x++) {
+					if (this.offlineData[i].deviceId == this.offlineData[x].deviceId) {
+						this.offlineData.splice(x, 1)
+					}
+				}
+			}
+
 		}
 		this.showAdddDevieButton();
 
@@ -249,20 +309,21 @@ export class DevicePage {
 			this.codeMessage(msg)
 		}
 	}
-	//在家布防
+	//设置布防回调
 	onHomeProtectionDeviceResponse(name, flag, msg) {
 		this.common.hideLoading();
 		this.deviceOnline = false;
+		//停止定时器
+		clearInterval(this.applicationInterval);
 		if (flag == '1') {
-			// this.codeMessage(msg)
-			// for (let index = 0; index < this.listData.length; index++) {
-			// 	var element = this.listData[index];
-			// 	if (element.deviceId == this.device.deviceId) {
-			// 		this.device.protectionState = "在家布防";
-			// 		this.listData.push(this.device);
-			// 	}
-			// }
-			this.getDeviceList();
+			this.codeMessage(msg)
+			for (let index = 0; index < this.listData.length; index++) {
+				var element = this.listData[index];
+				if (element.deviceId == this.device.deviceId) {
+					this.device.protectionState = this.deviceStatu;
+					// this.listData.push(this.device);
+				}
+			}
 		} else {
 			this.codeMessage(msg)
 		}
@@ -299,10 +360,10 @@ export class DevicePage {
 		this.common.showLoading("撤防中...");
 		this.deviceOnline = true;
 		this.device = item;
-		
+
 		//设备在线
 		var dat = this.common.MakeHeader(this.ttConst.SET_DEVICE) +
-			this.common.MakeParam(this.ttConst.SET_DEVICE_DEFENSE, "1");
+			this.common.MakeParam(this.ttConst.SET_DEVICE_DEFENSE, "0");
 		this.common.SendStrByParent(this.tomato.DSTTYPE_DEVCLI, this.device.deviceId, dat);
 		this.Timeout(item, "0");
 	}
@@ -311,9 +372,12 @@ export class DevicePage {
 		this.common.showLoading("布防中...");
 		this.deviceOnline = true;
 		this.device = item;
+		// var dat = this.common.MakeHeader(this.ttConst.SET_DEVICE) +
+		// 	this.common.MakeParam(this.ttConst.SET_DEVICE_DEFENSE, "0");
+		// this.common.SendStrByParent(this.tomato.DSTTYPE_DEVCLI, this.device.deviceId, dat);
 		//设备在线
 		var dat = this.common.MakeHeader(this.ttConst.SET_DEVICE) +
-			this.common.MakeParam(this.ttConst.SET_DEVICE_DEFENSE, "1");
+			this.common.MakeParam(this.ttConst.SET_DEVICE_DEFENSE, "2");
 		this.common.SendStrByParent(this.tomato.DSTTYPE_DEVCLI, this.device.deviceId, dat);
 		this.Timeout(item, "2");
 	}
@@ -322,7 +386,9 @@ export class DevicePage {
 		this.common.showLoading("布防中...");
 		this.deviceOnline = true;
 		this.device = item;
-		
+		// var dat = this.common.MakeHeader(this.ttConst.SET_DEVICE) +
+		// 	this.common.MakeParam(this.ttConst.SET_DEVICE_DEFENSE, "3");
+		// this.common.SendStrByParent(this.tomato.DSTTYPE_DEVCLI, this.device.deviceId, dat);
 		//设备在线
 		var dat = this.common.MakeHeader(this.ttConst.SET_DEVICE) +
 			this.common.MakeParam(this.ttConst.SET_DEVICE_DEFENSE, "1");
@@ -332,18 +398,17 @@ export class DevicePage {
 
 	//定时器设置链接服务器，通知设备
 	Timeout(deviceInfo, count) {
-		setTimeout(() => { //最长显示10秒
-			if (this.deviceOnline) {
-				this.device = deviceInfo;
-				//设备在线
-				var dat = this.common.MakeHeader(this.ttConst.CLIENT_SETNOTIFYALARM) +
-					this.common.MakeParam(this.ttConst.CLIENT_SETNOTIFYALARM_DEVICEID, deviceInfo.deviceId) +
-					this.common.MakeParam(this.ttConst.CLIENT_SETNOTIFYALARM_DEFENSE, count);
-				this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, "", dat);
-			}
-
+		this.applicationInterval = setInterval(() => {
+			this.device = deviceInfo;
+			//设备不在线
+			var dat = this.common.MakeHeader(this.ttConst.CLIENT_SETNOTIFYALARM) +
+				this.common.MakeParam(this.ttConst.CLIENT_SETNOTIFYALARM_DEVICEID, deviceInfo.deviceId) +
+				this.common.MakeParam(this.ttConst.CLIENT_SETNOTIFYALARM_DEFENSE, count);
+			this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, this.serve.getServeId(), dat);
+			clearInterval(this.applicationInterval);
 		}, 10000);
 	}
+
 	onAddLanrmingDeviceResponse(name, flag, msg) {
 		if (flag == '1') {
 			this.codeMessage("设置成功")
@@ -351,6 +416,7 @@ export class DevicePage {
 		} else {
 			this.codeMessage(msg)
 		}
+
 	}
 	//设备离线的时候预警
 	onDeviceOffLineResponse(name, flag, msg) {
@@ -372,4 +438,28 @@ export class DevicePage {
 		}
 	}
 
+	presentPopover(ev) {
+		let popover = this.popoverCtrl.create(PopoverPage, {
+			contentEle: "this.content.nativeElement",
+			textEle: "this.text.nativeElement"
+		});
+
+		popover.present({
+			ev: ev
+		});
+	}
+	addDeviceNotifa(name) {
+		this.addDevice();
+	}
+
+	cancelPoliceNotifa(name) {
+		if (this.common.deviceid == undefined) {
+			this.codeMessage('没有设备报警');
+			return;
+		}
+		//设备在线
+		var dat = this.common.MakeHeader(this.ttConst.SET_DEVICE) +
+			this.common.MakeParam(this.ttConst.SET_DEVICE_DEFENSE, "10");
+			this.common.SendStrByParent(this.tomato.DSTTYPE_DEVCLI, this.common.deviceid, dat);
+	}
 }

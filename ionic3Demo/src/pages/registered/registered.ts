@@ -7,6 +7,7 @@ import { Tomato } from '../../lib/tomato'
 import { Base64 } from 'js-base64';
 import { Emitter } from "../../other/emitter";
 import { Storage } from '@ionic/storage'
+import { RegistCode } from '../../other/registCode'
 
 
 /**
@@ -25,7 +26,7 @@ export class RegisteredPage {
 
 	userName;
 	passWord;
-	constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato,public storage : Storage) {
+	constructor(public serve: RegistCode, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato,public storage : Storage) {
 		let self = this;
 		Emitter.register(ttConst.TT_REGISTED_NOTIFICATION_NAME, self.onRegistResponse, self);
 
@@ -41,9 +42,9 @@ export class RegisteredPage {
 		Emitter.remove(this.ttConst.TT_REGISTED_NOTIFICATION_NAME, self.removeEmitter, self);
 	}
 	inRegister(username: HTMLInputElement, password: HTMLInputElement, code: HTMLInputElement) {
-		if (username.value.length == 0) {
+		if (username.value.length <11) {
 			let toast = this.toastCtrl.create({
-				message: "请输入账号!",
+				message: "请输入正确的手机号码!",
 				duration: 2000,
 				position: "top",
 			});
@@ -76,7 +77,7 @@ export class RegisteredPage {
 					this.common.MakeParam(this.ttConst.CLIENT_RAGISTER_USERNAME, username.value) +
 					this.common.MakeParam(this.ttConst.CLIENT_RAGISTER_PASSWORD, password.value) +
 					this.common.MakeParam(this.ttConst.CLIENT_RAGISTER_SMS, code.value);
-				this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, "", dat);
+				this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, this.serve.getServeId(), dat);
 			}
 
 		}
@@ -96,7 +97,7 @@ export class RegisteredPage {
 			var dat = this.common.MakeHeader(this.ttConst.CLIENT_SMS) +
 				this.common.MakeParam(this.ttConst.CLIENT_SMS_USER, username.value) +
 				this.common.MakeParam(this.ttConst.CLIENT_SMS_TYPE, "1");
-			this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, "", dat);
+			this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, this.serve.getServeId(), dat);
 
 			//发送验证码成功后开始倒计时
 			this.verifyCode.disable = false;

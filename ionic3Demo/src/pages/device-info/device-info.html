@@ -6,6 +6,11 @@
 <ion-header>
 	<ion-navbar color="primary">
 		<ion-title>设备详情</ion-title>
+		<ion-buttons end>
+				<button ion-button icon-only color="light" (click)="stopCall()">
+					停止拨打电话
+				</button>
+			</ion-buttons>
 	</ion-navbar>
 </ion-header>
 
@@ -18,13 +23,17 @@
 				<img [src]="userInfo?.deviceImg" style="size: 50px;">
 			</ion-avatar>
 			<h2>{{userInfo?.title}}</h2>
-		    <p>设备ID：{{userInfo?.deviceId}}</p>
+			<div class="address">{{userInfo?.address}}</div>
+		  <p>设备ID：{{userInfo?.deviceId}}</p>
 			<p class="statue-protection">{{userInfo?.protectionState}}</p>
 		</ion-item>
 
 		<button ion-item (click)="seleteItem(item)" *ngFor="let item of listData">
         		{{item?.title}}
-            </button>
+		</button>
+		<button ion-item (click)="config(item)" *ngIf="isWifi">
+			配置WIFI
+		</button>
 	</ion-list>
 	<div style="text-align: center; margin-left: 30px; margin-right: 30px;">
 			<button ion-button block color="primary" (click)="deleteDevice()">

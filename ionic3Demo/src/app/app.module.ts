@@ -1,9 +1,12 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA ,NO_ERRORS_SCHEMA ,ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { IonicStorageModule } from '@ionic/storage'
+import { Device } from '@ionic-native/device';
 
+
+import { PopoverPage } from '../pages/popover/popover'
 import { DevicePage } from '../pages/device/device';
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -31,29 +34,45 @@ import { DataModule } from '../other/DataModule'
 import { BackButtonProvider } from '../other/back-button-provider'
 import { NormalDevicePage } from '../pages/normal-device/normal-device'
 import { WifiDevicePage } from '../pages/wifi-device/wifi-device'
+import { CalendarModule } from "ion2-calendar";
+import { ChildDevicePage } from '../pages/child-device/child-device'
+import { websocket } from '../lib/websocket'
+import { EditorChildDevicePage } from '../pages/editor-child-device/editor-child-device'
+import { SlidesPage } from '../pages/slides/slides';
+import { AppVersion} from "@ionic-native/app-version";
+import { ChooseDevicePage } from '../pages/choose-device/choose-device'
+import { RegistCode } from '../other/registCode'
+import { SencondDeviceInfoPage }from '../pages/sencond-device-info/sencond-device-info'
 @NgModule({
 	
   declarations: [
     MyApp,
+    EditorChildDevicePage,
+    ChildDevicePage,
     LoginPage,
     AlarmNumberPage,
     AboutPage,
     ResetPswPage,
     RegisteredPage,
     AlarmPage,
+    SlidesPage,
     SettingPage,
     ChangePswPage,
     DeviceInfoPage,
     DevicePage,
+    PopoverPage,
+    SencondDeviceInfoPage,
     TabsPage,
     PersonPage,
     HistoryPage,
     AddDevicePage,
     NormalDevicePage,
-    WifiDevicePage
+    WifiDevicePage,
+    ChooseDevicePage
   ],
   imports: [
     BrowserModule,
+    CalendarModule,
     IonicModule.forRoot(MyApp,{
     tabsHideOnSubPages: 'true',
     backButtonText: '',//按钮内容
@@ -63,38 +82,49 @@ import { WifiDevicePage } from '../pages/wifi-device/wifi-device'
 
   ],
   bootstrap: [IonicApp],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ],
   entryComponents: [
     MyApp,
+    EditorChildDevicePage,
+    ChildDevicePage,
     AlarmNumberPage,
     DeviceInfoPage,
     LoginPage,
     AlarmPage,
     AboutPage,
     ResetPswPage,
+    SlidesPage,
+    SencondDeviceInfoPage,
     RegisteredPage,
     SettingPage,
     ChangePswPage,
     DevicePage,
     TabsPage,
+    PopoverPage,
     PersonPage,
     HistoryPage,
     AddDevicePage,
     NormalDevicePage,
-    WifiDevicePage
+    WifiDevicePage,
+    ChooseDevicePage
   ],
   providers: [
     StatusBar,
+    AppVersion,
     Camera,
+    Device,
     ImagePicker,
     SplashScreen,
     Tomato,
+    RegistCode,
+    websocket,
     Common,
     DataModule,
     BackButtonProvider,
     TTConst,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })
 export class AppModule {
- 
+
 }

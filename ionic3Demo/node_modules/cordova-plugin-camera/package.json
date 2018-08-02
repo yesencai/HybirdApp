@@ -1,59 +1,35 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "cordova-plugin-camera@4.0.3",
-        "scope": null,
-        "escapedName": "cordova-plugin-camera",
-        "name": "cordova-plugin-camera",
-        "rawSpec": "4.0.3",
-        "spec": "4.0.3",
-        "type": "version"
-      },
-      "/Users/Dylan/Desktop/HybirdApp-master/ionic3Demo"
-    ]
-  ],
-  "_cnpm_publish_time": 1523945114549,
   "_from": "cordova-plugin-camera@4.0.3",
-  "_hasShrinkwrap": false,
   "_id": "cordova-plugin-camera@4.0.3",
-  "_inCache": true,
+  "_inBundle": false,
+  "_integrity": "sha1-c3Olk4MYyGzP2E43E+I4LRD+B2s=",
   "_location": "/cordova-plugin-camera",
-  "_nodeVersion": "6.6.0",
-  "_npmOperationalInternal": {
-    "host": "s3://npm-registry-packages",
-    "tmp": "tmp/cordova-plugin-camera_4.0.3_1523945114253_0.3430837981620465"
-  },
-  "_npmUser": {
-    "name": "stevegill",
-    "email": "stevengill97@gmail.com"
-  },
-  "_npmVersion": "3.10.10",
   "_phantomChildren": {},
   "_requested": {
+    "type": "version",
+    "registry": true,
     "raw": "cordova-plugin-camera@4.0.3",
-    "scope": null,
-    "escapedName": "cordova-plugin-camera",
     "name": "cordova-plugin-camera",
+    "escapedName": "cordova-plugin-camera",
     "rawSpec": "4.0.3",
-    "spec": "4.0.3",
-    "type": "version"
+    "saveSpec": null,
+    "fetchSpec": "4.0.3"
   },
   "_requiredBy": [
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npm.taobao.org/cordova-plugin-camera/download/cordova-plugin-camera-4.0.3.tgz",
+  "_resolved": "http://registry.npm.taobao.org/cordova-plugin-camera/download/cordova-plugin-camera-4.0.3.tgz",
   "_shasum": "7373a5938318c86ccfd84e3713e2382d10fe076b",
-  "_shrinkwrap": null,
   "_spec": "cordova-plugin-camera@4.0.3",
-  "_where": "/Users/Dylan/Desktop/HybirdApp-master/ionic3Demo",
+  "_where": "/Users/Dylan/Desktop/IonicHybirdApp/ionic3Demo",
   "author": {
     "name": "Apache Software Foundation"
   },
   "bugs": {
     "url": "https://issues.apache.org/jira/browse/CB"
   },
+  "bundleDependencies": false,
   "cordova": {
     "id": "cordova-plugin-camera",
     "platforms": [
@@ -64,7 +40,7 @@
       "osx"
     ]
   },
-  "dependencies": {},
+  "deprecated": false,
   "description": "Cordova Camera Plugin",
   "devDependencies": {
     "dmd-plugin-cordova-plugin": "^0.1.0",
@@ -77,13 +53,6 @@
     "eslint-plugin-standard": "^3.0.1",
     "husky": "^0.10.1",
     "jsdoc-to-markdown": "^1.2.0"
-  },
-  "directories": {},
-  "dist": {
-    "shasum": "7373a5938318c86ccfd84e3713e2382d10fe076b",
-    "size": 173467,
-    "noattachment": false,
-    "tarball": "http://registry.npm.taobao.org/cordova-plugin-camera/download/cordova-plugin-camera-4.0.3.tgz"
   },
   "engines": {
     "cordovaDependencies": {
@@ -107,56 +76,7 @@
     "cordova-osx"
   ],
   "license": "Apache-2.0",
-  "maintainers": [
-    {
-      "name": "anis",
-      "email": "anis.kadri@gmail.com"
-    },
-    {
-      "name": "bowserj",
-      "email": "bowserj@apache.org"
-    },
-    {
-      "name": "cordovaowner",
-      "email": "stevengill.97@gmail.com"
-    },
-    {
-      "name": "csantanapr",
-      "email": "csantana23@gmail.com"
-    },
-    {
-      "name": "filmaj",
-      "email": "maj.fil@gmail.com"
-    },
-    {
-      "name": "jcesarmobile",
-      "email": "jcesarmobile@gmail.com"
-    },
-    {
-      "name": "macdonst",
-      "email": "simon.macdonald@gmail.com"
-    },
-    {
-      "name": "purplecabbage",
-      "email": "purplecabbage@gmail.com"
-    },
-    {
-      "name": "shazron",
-      "email": "shazron@gmail.com"
-    },
-    {
-      "name": "stevegill",
-      "email": "stevengill97@gmail.com"
-    },
-    {
-      "name": "surajpindoria",
-      "email": "suraj.pindoria@yahoo.com"
-    }
-  ],
   "name": "cordova-plugin-camera",
-  "optionalDependencies": {},
-  "publish_time": 1523945114549,
-  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/apache/cordova-plugin-camera.git"

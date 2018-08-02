@@ -3,10 +3,15 @@
 	<ion-navbar color="primary" no-border-bottom>
 		<ion-title>设备列表</ion-title>
 		<ion-buttons end>
+			<button ion-button color="white" icon-only (click)="presentPopover($event)">
+			  <ion-icon name="more"></ion-icon>
+			</button>
+		  </ion-buttons>
+		<!-- <ion-buttons end>
 			<button ion-button icon-only color="light" (click)="addDevice()">
 				添加设备
 			</button>
-		</ion-buttons>
+		</ion-buttons> -->
 	</ion-navbar>
 	<ion-toolbar no-border-top>
 		<ion-segment [(ngModel)]="testSegment" mode="md">
@@ -17,7 +22,7 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content #popoverContent>
 	<!--
     	作者：yesencai@163.com
     	时间：2018-05-16
@@ -54,7 +59,8 @@
 								<img [src]="item?.deviceImg" style="size: 50px;">
 							</ion-avatar>
 							<h2>{{item?.title}}</h2>
-							<p>电量：{{item?.electricity}}</p>
+							<div class="address">{{item?.address}}</div>  
+							<p>设备id:{{item?.deviceId}}</p>
 							<p class="device-count">子设备数量：{{item?.count}}</p>
 							<p class="statue-protection">{{item?.protectionState}}</p>
 							<ion-icon item-right>{{item?.onlineState}}</ion-icon>
@@ -89,7 +95,8 @@
 								<img [src]="item?.deviceImg" style="size: 50px;">
 							</ion-avatar>
 							<h2>{{item?.title}}</h2>
-							<p>电量：{{item?.electricity}}</p>
+							<div class="address">{{item?.address}}</div>  
+							<p>设备id：{{item?.deviceId}}</p>
 							<p class="device-count">子设备数量：{{item?.count}}</p>
 
 							<button style="margin-right: 0;" class="button button-position delete-button-style" item-right (click)="removeItem($event,item)">

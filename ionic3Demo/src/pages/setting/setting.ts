@@ -11,6 +11,7 @@ import { Tomato } from '../../lib/tomato'
 import { Base64 } from 'js-base64';
 import { Emitter } from '../../other/emitter'
 import { Storage } from '@ionic/storage'
+import { RegistCode } from '../../other/registCode'
 /**
  * Generated class for the SettingPage page.
  *
@@ -30,7 +31,7 @@ export class SettingPage {
 	name: string = "未填写";
 	mobile: string = "未填写";
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public alerCtrl: AlertController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato, public toastCtrl: ToastController,public storage : Storage) {
+	constructor(public serve: RegistCode, public navCtrl: NavController, public navParams: NavParams, public events: Events, public alerCtrl: AlertController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato, public toastCtrl: ToastController, public storage: Storage) {
 		let self = this;
 		Emitter.register(this.ttConst.TT_EXIT_NOTIFICATION_NAME, self.onExitResponse, self);
 	}
@@ -86,7 +87,7 @@ export class SettingPage {
 					handler: () => {
 						this.common.showLoading("正在退出登录...");
 						var dat = this.common.MakeHeader(this.ttConst.CLIENT_LOGOFF);
-						this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, "", dat);
+						this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, this.serve.getServeId(), dat);
 					}
 				}
 			]
@@ -96,23 +97,9 @@ export class SettingPage {
 	//退出成功后的回调
 	onExitResponse(name, flag, msg) {
 		this.common.hideLoading();
-		if (flag == '1') {
-			this.storage.clear();
-			this.events.publish('toLogin');
-		} else {
-			this.codeMessage(msg)
-		}
+		this.storage.clear();
+		this.events.publish('toLogin');
 	}
-	//获取验证码后的提示信息，失败或成功
-	codeMessage(msg) {
-		let toast = this.toastCtrl.create({
-			message: msg,
-			duration: 2000,
-			position: "top"
-		});
-		toast.present();
-	}
-
 	removeEmitter(dd) {
 
 	}

@@ -8,6 +8,8 @@ import { Base64 } from 'js-base64';
 import { Emitter } from '../../other/emitter'
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import { Storage } from '@ionic/storage'
+import { RegistCode } from '../../other/registCode'
+
 
 /**
  * Generated class for the ResetPswPage page.
@@ -23,7 +25,7 @@ import { Storage } from '@ionic/storage'
 export class ResetPswPage {
 
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato,public alerCtrl:AlertController,public storage : Storage) {
+	constructor(public serve : RegistCode, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato,public alerCtrl:AlertController,public storage : Storage) {
 		let self = this;
 		Emitter.register(ttConst.TT_RESETPASSWORD_NOTIFICATION_NAME, self.onResetPawResponse, self);
 
@@ -56,7 +58,7 @@ export class ResetPswPage {
 			var dat = this.common.MakeHeader(this.ttConst.CLIENT_SMS) +
 				this.common.MakeParam(this.ttConst.CLIENT_SMS_USER, username.value) +
 				this.common.MakeParam(this.ttConst.CLIENT_SMS_TYPE, "2");
-			this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, "", dat);
+			this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, this.serve.getServeId(), dat);
 		}
 	}
 	// 验证码倒计时
@@ -104,7 +106,7 @@ export class ResetPswPage {
 			var dat = this.common.MakeHeader(this.ttConst.CLIENT_UNPASSWORD) +
 				this.common.MakeParam(this.ttConst.CLIENT_UNPASSWORD_USERNAME, username.value) +
 				this.common.MakeParam(this.ttConst.CLIENT_UNPASSWORD_SMS, code.value);
-			this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, "", dat);
+			this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, this.serve.getServeId(), dat);
 		}
 	}
 

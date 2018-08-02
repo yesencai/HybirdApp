@@ -7,36 +7,49 @@
     "files": {}
   },
   "installed_plugins": {
-    "com.synconset.imagepicker": {
-      "PACKAGE_NAME": "io.ionic.starter"
+    "cordova-plugin-add-swift-support": {
+      "PACKAGE_NAME": "com.tomato.alarm"
+    },
+    "cordova-plugin-app-version": {
+      "PACKAGE_NAME": "com.tomato.alarm"
+    },
+    "cordova-plugin-appminimize": {
+      "PACKAGE_NAME": "com.tomato.alarm"
     },
     "cordova-plugin-camera": {
-      "PACKAGE_NAME": "io.ionic.starter"
+      "PACKAGE_NAME": "com.tomato.alarm"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
-    "cordova-plugin-file": {
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
-    "cordova-plugin-file-transfer": {
-      "PACKAGE_NAME": "io.ionic.starter"
+      "PACKAGE_NAME": "com.tomato.alarm"
     },
     "cordova-plugin-ionic-keyboard": {
-      "PACKAGE_NAME": "io.ionic.starter"
+      "PACKAGE_NAME": "com.tomato.alarm"
     },
     "cordova-plugin-ionic-webview": {
-      "PACKAGE_NAME": "io.ionic.starter"
+      "PACKAGE_NAME": "com.tomato.alarm"
     },
     "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "io.ionic.starter"
+      "PACKAGE_NAME": "com.tomato.alarm"
     },
-    "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "io.ionic.starter"
+    "cordova-plugin-telerik-imagepicker": {
+      "PACKAGE_NAME": "com.tomato.alarm"
+    },
+    "cordova-plugin-websocket": {
+      "PACKAGE_NAME": "com.tomato.alarm"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "io.ionic.starter"
+      "PACKAGE_NAME": "com.tomato.alarm"
+    },
+    "cordova-plugin-wifi-manager": {
+      "PACKAGE_NAME": "com.tomato.alarm"
+    },
+    "cordova-plugin-advanced-http": {
+      "PACKAGE_NAME": "com.tomato.alarm"
     }
   },
-  "dependent_plugins": {}
+  "dependent_plugins": {
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.tomato.alarm"
+    }
+  }
 }

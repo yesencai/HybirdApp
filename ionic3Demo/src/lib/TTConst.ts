@@ -80,28 +80,32 @@ export class TTConst {
   CLIENT_GET_FIRST_DEVICE: number = 0x1006;
   // 服务器回复,多个设备分多次连续回复
   ACK_CLIENT_GET_FIRST_DEVICE: number = 0x2006;
-  ACK_CLIENT_GET_FIRST_DEVICE_ID: number = 1; // 网关名称，唯一识别号
-  ACK_CLIENT_GET_FIRST_DEVICE_MODE: number = 2; // 模式，GPRS 或 WIFI
-  ACK_CLIENT_GET_FIRST_DEVICE_ONLINE: number = 3; // 在线状态
-  ACK_CLIENT_GET_FIRST_DEVICE_STAT: number = 4; // 外出布防\留守布防\撤防\告警等
-  ACK_CLIENT_GET_FIRST_DEVICE_NAME: number = 5; // 别名，自定义名
-  ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_PHONE1: number = 6;
-  ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_PHONE2: number = 7;
-  ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_MODE: number = 8;
-  ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_TIME: number = 9;
-  // 以下不作用于门磁
-  ACK_CLIENT_GET_FSECOND_DEVICE_NUMBER: number = 10; // 下挂的第二级设备数量
+  ACK_CLIENT_GET_FIRST_DEVICE_ID = 1; // 网关名称，唯一识别号
+  ACK_CLIENT_GET_FIRST_DEVICE_MODE = 2; // 模式，GPRS 或 WIFI
+  ACK_CLIENT_GET_FIRST_DEVICE_ONLINE = 3; // 在线状态
+  ACK_CLIENT_GET_FIRST_DEVICE_STAT = 4; // 外出布防\留守布防\撤防等
+  ACK_CLIENT_GET_FIRST_DEVICE_ALARMSTAT = 5; // 开关门、告警、等
+  ACK_CLIENT_GET_FIRST_DEVICE_NAME = 6; // 别名，自定义名
+  ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_PHONE1 = 7; // 电话1
+  ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_PHONE2 = 8; // 电话2
+  ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_MODE = 9; // 优先通知方式
+  ACK_CLIENT_GET_FIRST_DEVICE_NOTIFYALARM_TIME = 10; // 再次通知间隔时间
+  ACK_CLIENT_GET_FSECOND_DEVICE_NUMBER = 11; // 下挂的第二级设备数量
+  ACK_CLIENT_GET_FSECOND_DEVICE_AREA = 12; // 位置
 
-  // 8. 获取第二级设备 及其状态
-  CLIENT_GET_SECOND_DEVICE: number = 0x1007;
-  CLIENT_GET_FIRST_DEVICE_ID: number = 1; // 网关名称，根据第一级设备ID找到下挂的第二级设备
-  // 服务器回复,多个设备分多次连续回复
-  ACK_CLIENT_GET_SECOND_DEVICE: number = 0x2007;
-  ACK_CLIENT_GET_SECOND_DEVICE_ID: number = 1;
-  ACK_CLIENT_GET_SECOND_DEVICE_MODE: number = 2;
-  ACK_CLIENT_GET_SECOND_DEVICE_ONLINE: number = 3;
-  ACK_CLIENT_GET_SECOND_DEVICE_STAT: number = 4;
-  ACK_CLIENT_GET_SECOND_DEVICE_NAME: number = 5;
+   // 8. 获取第二级设备 及其状态，App->服务器
+   CLIENT_GET_SECOND_DEVICE = 0x1007;
+   CLIENT_GET_FIRST_DEVICE_ID = 1; // 网关名称，根据第一级设备ID找到下挂的第二级设备
+   // 服务器回复,多个设备分多次连续回复
+   ACK_CLIENT_GET_SECOND_DEVICE = 0x2007;
+   ACK_CLIENT_GET_SECOND_DEVICE_ID = 1;
+   ACK_CLIENT_GET_SECOND_DEVICE_ONLINE = 2;
+   ACK_CLIENT_GET_SECOND_DEVICE_NAME = 3;
+   ACK_CLIENT_GET_SECOND_DEVICE_AREA = 4;
+   ACK_CLIENT_GET_SECOND_DEVICE_STAT = 5; // 布防或撤防
+   ACK_CLIENT_GET_SECOND_DEVICE_ALARMSTAT = 5; // 开关门
+   ACK_CLIENT_GET_SECOND_DEVICE_TYPE = 6; // 探头或者遥控器
+
 
   // 9.在服务器的数据库里添加第一级设备
   // 设备先通过无线频段关联到app，app再上报到服务器
@@ -116,14 +120,20 @@ export class TTConst {
   ACK_CLIENT_ADD_FIRST_DEVICE_ERRORINFO: number = 2;
 
   // 10.添加第二级设备
-  CLIENT_ADD_SECOND_DEVICE: number = 0x1009;
-  CLIENT_ADD_DEVICE_ID: number = 1; // 网关ID，第二级设备只能挂在唯一一个第一级设备下
-  CLIENT_ADD_SECOND_DEVICE_ID: number = 2; // 设备ID
-  CLIENT_ADD_SECOND_DEVICE_CODE: number = 3; // 添加码
-  // 服务器返回
-  ACK_CLIENT_ADD_SECOND_DEVICE: number = 0x2009;
-  ACK_CLIENT_ADD_SECOND_DEVICE_SUCCESS: number = 1;
-  ACK_CLIENT_ADD_SECOND_DEVICE_ERRORINFO: number = 2;
+  CLIENT_ADD_SECOND_DEVICE = 0x1009;
+  CLIENT_ADD_DEVICE_TOTAL = 1; // 总条数
+  CLIENT_ADD_DEVICE_NUM = 2; // 第几条
+  CLIENT_ADD_DEVICE_ID = 3; // 网关ID，第二级设备只能挂在唯一一个第一级设备下
+  CLIENT_ADD_SECOND_DEVICE_ID = 4; // 设备ID
+  CLIENT_ADD_SECOND_DEVICE_TYPE = 5; // 0 遥控器，1 探头
+  CLIENT_ADD_SECOND_DEVICE_NAME = 6; // 名字
+  CLIENT_ADD_SECOND_DEVICE_ADDR = 7; // 场景
+  // 服务器/设备（网关）返回
+  ACK_CLIENT_ADD_SECOND_DEVICE = 0x2009;
+  ACK_CLIENT_ADD_SECOND_DEVICE_SUCCESS = 1;
+  ACK_CLIENT_ADD_SECOND_DEVICE_ERRORINFO = 2;
+  ACK_CLIENT_ADD_SECOND_DEVICE_NUM = 3;
+
 
   // 11.删除第一级设备
   CLIENT_DEL_FIRST_DEVICE: number = 0x100A;
@@ -142,43 +152,64 @@ export class TTConst {
   ACK_CLIENT_DEL_SECOND_DEVICE_SUCCESS: number = 1;
   ACK_CLIENT_DEL_SECOND_DEVICE_ERRORINFO: number = 2;
 
-  // 13.第一级设备状态汇报到服务器
-  // 服务器收到数据，保存到数据库。然后回复成功。有2个表，1是状态表，2是历史记录表
-  // 智能网关 状态：外出布防、留守布防、撤防、
-  // 门磁水浸 状态：布防、撤防、告警（门开关、水浸）等等
+// 12.第一级设备状态汇报到服务器
+  // 服务器收到数据，保存到数据库。然后回复成功。
   // 注意：每次传输未必含有所有字段
-  DEVICE_STAT_FIRST: number = 0x100C;
-  DEVICE_STAT_FIRST_DEVICESTAT: number = 1;
-  // 第一级设备状态，内容根据第18条协议 // 电压低：LowP，根据内容，如果是触发的告警等需要服务器推送到App
-  DEVICE_UPDATENOTIFYALARM_PHONE1: number = 2; // 优先电话
-  DEVICE_UPDATENOTIFYALARM_PHONE2: number = 3; // 次要电话
-  DEVICE_UPDATENOTIFYALARM_MODE: number = 4; // 优先通知方式，短信或者电话
-  DEVICE_UPDATENOTIFYALARM_TIME: number = 5; // 设置再次通知间隔时长或不再通知，单位秒
-
+  DEVICE_STAT_FIRST:number = 0x100C;
+  DEVICE_STAT_FIRST_DEVICESTAT = 1; // 布防状态
+  // 具体内容如下：
+  // 这条对所有设备都有效，撤防是0，在家是1，外出是2 紧急报警是3（报警主机只能通过0撤防来取消报警状态）
+  
+  DEVICE_STAT_FIRST_ALARMSTAT = 2; // 各种告警状态
+  // 电压低：5
+  // 电压正常：6
+  // 停电：7
+  // 来电：8
+  // 告警触发： 9
+  // 告警消除： 10 （布防状态不变）
+  // 一般触发：11
+  // 探头闭合（比如门磁关门）：12
+  // 如需要继续往下扩展
   // 第二级设备无法联网，通过433频段与网关通信，告知网关状态，网关上报到服务器
-  DEVICE_STAT_SECOND_DEVICEID: number = 6; // 第二级设备ID
-  DEVICE_STAT_SECOND_DEVICESTAT: number = 7; // 第二级设备状态
-  // 服务器找到状态表更新，并且在历史记录表中增加一行，然后返回
-  ACK_DEVICE_STAT_FIRST: number = 0x200C;
-  ACK_DEVICE_STAT_FIRST_SUCCESS: number = 1;
-  ACK_DEVICE_STAT_FIRST_ERRORINFO: number = 2;
+  DEVICE_UPDATENOTIFYALARM_PHONE1 = 3; // 优先电话
+  DEVICE_UPDATENOTIFYALARM_PHONE2 = 4; // 次要电话
+  DEVICE_UPDATENOTIFYALARM_MODE = 5; // 优先通知方式，短信或者电话
+  DEVICE_UPDATENOTIFYALARM_TIME = 6; // 设置再次通知间隔时长或不再通知，单位秒
+  DEVICE_STAT_SECOND_DEVICEID = 7; // 第二级设备ID
+  DEVICE_STAT_SECOND_DEVICESTAT = 8; // 第二级设备状态，第二级布防就只有一种，没有外出在家的区别，代号1
+  DEVICE_STAT_SECOND_ALARMSTAT = 9; // 告警状态，开关门等
+  // 电压低：5
+  // 电压正常：6
+  // 停电：7
+  // 来电：8
+  // 告警触发： 9
+  // 告警消除： 10 （布防状态不变）
+  // 一般触发：11
+  // 探头闭合（比如门磁关门）：12
+  // 如需要继续往下扩展
+  // 服务器返回
+  ACK_DEVICE_STAT_FIRST : number = 0x200C;
+  ACK_DEVICE_STAT_FIRST_SUCCESS = 1;
+  ACK_DEVICE_STAT_FIRST_ERRORINFO = 2;
 
-  // 14.客户端获取第一级设备状态历史记录
-  CLIENT_GET_HISTOR_FIRST_DEVICE: number = 0x100D;
-  CLIENT_GET_HISTOR_FIRST_DEVICEID: number = 1;
-  // 默认为当天，如20180509，每刷新一次增加一天，也可指定，APP自由实现
-  CLIENT_GET_HISTOR_FIRST_DEVICETIME: number = 2;
-  CLIENT_GET_HISTOR_FIRST_DEVICENUM = 3; // 1表示最近10条记录，2表示第11到20条记录，以此类推
-  // 服务器返回多条数据，每条数据的内容如下：
-  ACK_CLIENT_GET_HISTOR_FIRST_DEVICE: number = 0x200D;
-  ACK_CLIENT_GET_HISTOR_FIRST_DEVICEID: number = 1;
-  ACK_CLIENT_GET_HISTOR_FIRST_HISTORYTIME: number = 2; // 历史数据发生的时间
-  ACK_CLIENT_GET_HISTOR_FIRST_HISTORYDATA: number = 3; // 历史数据的内容
+
+   // 14.客户端获取第一级设备状态历史记录，App->服务器
+   CLIENT_GET_HISTOR_FIRST_DEVICE:number = 0x100D;
+   CLIENT_GET_HISTOR_FIRST_DEVICEID = 1;
+   CLIENT_GET_HISTOR_FIRST_DEVICETIME = 2; // 默认为当天，格式20180509，也可指定，APP自由实现
+   CLIENT_GET_HISTOR_FIRST_DEVICENUM = 3; // 1表示最近10条记录，2表示第11到20条记录，以此类推
+   // 服务器返回多条数据，每条数据的内容如下：
+   ACK_CLIENT_GET_HISTOR_FIRST_DEVICE :number = 0x200D;
+   ACK_CLIENT_GET_HISTOR_FIRST_DEVICEID = 1;
+   ACK_CLIENT_GET_HISTOR_FIRST_HISTORYTIME = 2; // 历史数据发生的时间
+   ACK_CLIENT_GET_HISTOR_FIRST_HISTORYDATA = 3; // 历史数据的内容
+ 
 
   // 15.客户端获取第二级设备状态历史记录
   CLIENT_GET_HISTOR_SECOND_DEVICE: number = 0x100E;
   CLIENT_GET_HISTOR_SECOND_DEVICEID: number = 1;
   CLIENT_GET_HISTOR_SECOND_DEVICETIME: number = 2;
+  CLIENT_GET_HISTOR_SECOND_DEVICENUM = 3; // 1表示最近10条记录，2表示第11到20条记录，以此类推
   // 服务器返回多条数据，每条数据的内容如下：
   ACK_CLIENT_GET_HISTOR_SECOND_DEVICE: number = 0x200E;
   ACK_CLIENT_GET_HISTOR_SECOND_DEVICEID: number = 1;
@@ -213,13 +244,13 @@ export class TTConst {
   // 布防和撤防，布防：Defense_XXX //此处XXX就是用户自定义的内容，如室内，室外，客厅，仓库等
   // 撤防：Withdrew
   SET_DEVICE_DEFENSE: number = 1;
-  SET_DEVICE_MODE: number = 2; // 优先方式：SMS\Call
-  SET_DEVICE_PHONE1: number = 3;
-  SET_DEVICE_PHONE2: number = 4; // 报警电话
-  SET_DEVICE_Interval: number = 5; // 报警间隔： 数字，单位秒，如300 即 5分钟
-  SET_DEVICE_ALARM: number = 6; // 一键告警 1为触发告警，0为取消告警（布防状态不变）
-  SET_DEVICE_WIFI_SSID: number = 7; // app与设备配对后发送给设备wifi名
-  SET_DEVICE_WIFI_PWD: number = 8; // wifi密码
+  SET_DEVICE_MODE = 2; // 优先方式：电话1，短信0
+  SET_DEVICE_PHONE1 = 3; // 优先报警电话
+  SET_DEVICE_PHONE2 = 4; // 次选报警电话
+  SET_DEVICE_Interval = 5; // 报警间隔： 单位分钟
+  SET_SECOND_DEVICE_ID = 6; // 第二级设备ID （设置第二级设备布防驻防需要线使用这一条）
+  SET_SECOND_DEVICE_DEFENSE = 7; // 撤防是0，布防是1
+
   // 设备回复
   ACK_SET_DEVICE: number = 0x2013;
   ACK_SET_DEVICE_SUCCESS: number = 1; // 设置成功回复1，失败回复0
@@ -237,36 +268,86 @@ export class TTConst {
   ACK_SERVER_SEND_SUCCESS: number = 1; // 设置成功回复1，失败回复0
   ACK_SERVER_SEND_ERRORINFO: number = 2;
 
-  // 20.App设置别名等
-  CLIENT_SET: number = 0x1015;
-  CLIENT_SET_DEVICE_ID: number = 1; // 第一级告警设备ID
-  CLIENT_SET_SECOND_DEVICE_ID: number = 2; // 第一级告警设备ID
-  CLIENT_SET_DEVICE_NAME: number = 3; // 用户设置的别名
-  // 回复
-  ACK_CLIENT_SET: number = 0x2015;
-  ACK_CLIENT_SET_SUCCESS: number = 1; // 设置成功回复1，失败回复0
-  ACK_CLIENT_SET_ERRORINFO: number = 2;
+   // 20.App设置别名等，App->服务器
+   CLIENT_SET = 0x1015;
+   CLIENT_SET_DEVICE_ID = 1; // 第一级告警设备ID
+   CLIENT_SET_SECOND_DEVICE_ID = 2; // 第二级告警设备ID
+   CLIENT_SET_DEVICE_IDd = 3; // 修改设备ID
+   CLIENT_SET_DEVICE_NAME = 4; // 用户设置的别名
+   CLIENT_SET_DEVICE_AREA = 5; // 地址、场景
+   CLIENT_SET_SECOND_DEVICE_TYPE = 6; // 修改类型是 遥控器或探头
+   // 服务器回复
+   ACK_CLIENT_SET = 0x2015;
+   ACK_CLIENT_SET_SUCCESS = 1; // 设置成功回复1，失败回复0
+   ACK_CLIENT_SET_ERRORINFO = 2;
+ 
+  //21.获取第2级设备ID（唯一码）
+  //当第一级设备与第2级设备配对，第一级设备把第二级设备id发送到手机app，app获得后确认无误，则利用第9条协议添加设备
+  DEVICE_SEND_ID = 0x1016;
+  DEVICE_SEND_SECONDDEVICEID = 1;//第2级设备ID
+  //app回复
+  ACK_DEVICE_SEND_ID = 0x2016;
+  ACK_DEVICE_SEND_ID_SUCCESS = 1;
+  ACK_DEVICE_SEND_ID_ERRORINFO = 2;
+  //22.网关进入学习模式
+  CLIENT_SECDEV_LEARN = 0x1017;
+  CLIENT_SECDEV_LEARN_TIME = 1; // 学习模式持续的时间 单位秒
+  CLIENT_SECDEV_LEARN_CONTROL = 2; // 一般探头为0，遥控器为1
+  //网关回复
+  ACK_CLIENT_SECDEV_LEARN = 0x2017;
+  ACK_CLIENT_SECDEV_LEARN_SUCCESS = 1;
+  ACK_CLIENT_SECDEV_LEARN_ERRORINFO = 2;
+  // 23.App发送指令到服务器停止拨打电话、App发送指令到gprs模块停止拨打电话，App->服务器
+  CLIENT_STOP_CALL = 0x1018;
+  CLIENT_STOP_CALL_DEVICEID = 1; // 触发打电话的设备 id
+  // 服务器回复
+  ACK_CLIENT_STOP_CALL = 0x2018;
+  ACK_CLIENT_STOP_CALL_SUCCESS = 1;
+  ACK_CLIENT_STOP_CALL_ERRORINFO = 2;
 
+  // 24.充值，App->服务器
+  CLIENT_CHARGE = 0x1019;
+  CLIENT_CHARGE_USERNAME = 1;
+  // 服务器回复
+  ACK_CLIENT_CHARGE = 0x2019 ;
+  ACK_CLIENT_CHARGE_SUCCESS = 1;
+  ACK_CLIENT_CHARGE_ERRORINFO = 2; // 成功就是带二维码或者字符串，失败就是
+  // 25.App进入学习模式添加第1级设备
+  CLIENT_LEARN = 0x101A; // 命令持续20秒，20秒内设备触发指令则把设备ID发送到APP，否则服务器无回复
+  // 服务器回复
+  ACK_CLIENT_LEARN = 0x201A;
+  ACK_CLIENT_LEARN_DEVICEID = 1; // 设备ID，有可能有多个，通常只有一个
+
+  // 26.App发送该指令进行测试，设备收到后使得设备蜂鸣器响
+  CLIENT_LEARN_TEST = 0x101B; // 25条协议回复了设备ID，app根据设备id发送此指令使得设备蜂鸣器响，再根据情况添加设备
   /****************通知名字 *********************/
 
-  TT_LOGIN_NOTIFICATION_NAME :any = 'TT_LOGIN'//登录成功通知
-  TT_REGISTED_NOTIFICATION_NAME :any = 'TT_REGISTED'//注册成功通知
-  TT_CHAGEPASSWORD_NOTIFICATION_NAME :any = 'TT_CHANGEPASSWORD'//修改密码成功通知
-  TT_EXIT_NOTIFICATION_NAME :any = 'TT_EXIT'//退出登录成功通知
-  TT_RESETPASSWORD_NOTIFICATION_NAME :any = 'TT_RESETPASSWORD'//重置密码成功通知
-  TT_ADDNORMALDEVECE_NOTIFICATION_NAME :any = 'TT_ADDNORMALDEVECE'//绑定普通设备成功
-  TT_GETDEVICELIST_NOTIFICATION_NAME :any = 'TT_GETDEVICELIST'//获取设备列表成功
-  TT_REMOVEDEVICE_NOTIFICATION_NAME :any = 'TT_REMOVEDEVICE'//删除设备列表
-  TT_HOMEPROTECTION_NOTIFICATION_NAME :any = 'TT_HOMEPROTECTION'//在家布防
-  TT_OUTPROTECTION_NOTIFICATION_NAME :any = 'TT_HOMEPROTECTION'//外出布防
-  TT_REMOAVAL_NOTIFICATION_NAME :any = 'TT_HOMEPROTECTION'//撤防
+  TT_LOGIN_NOTIFICATION_NAME: any = 'TT_LOGIN'//登录成功通知
+  TT_REGISTED_NOTIFICATION_NAME: any = 'TT_REGISTED'//注册成功通知
+  TT_CHAGEPASSWORD_NOTIFICATION_NAME: any = 'TT_CHANGEPASSWORD'//修改密码成功通知
+  TT_EXIT_NOTIFICATION_NAME: any = 'TT_EXIT'//退出登录成功通知
+  TT_RESETPASSWORD_NOTIFICATION_NAME: any = 'TT_RESETPASSWORD'//重置密码成功通知
+  TT_ADDNORMALDEVECE_NOTIFICATION_NAME: any = 'TT_ADDNORMALDEVECE'//绑定普通设备成功
+  TT_GETDEVICELIST_NOTIFICATION_NAME: any = 'TT_GETDEVICELIST'//获取设备列表成功
+  TT_REMOVEDEVICE_NOTIFICATION_NAME: any = 'TT_REMOVEDEVICE'//删除设备列表
+  TT_HOMEPROTECTION_NOTIFICATION_NAME: any = 'TT_HOMEPROTECTION'//在家布防
+  TT_OUTPROTECTION_NOTIFICATION_NAME: any = 'TT_HOMEPROTECTION'//外出布防
+  TT_SECODEDEVICEREMOAVAL_NOTIFICATION_NAME: any = 'TT_SECODEDEVICEREMOAVAL_NOTIFICATION'//子设备布防侧方
 
-  TT_MQTTCONNET_NOTIFICATION_NAME :any = 'TT_MQTTCONNET'//删除设备列表
-  TT_GETDEVICEHISTORYLIST_NOTIFICATION_NAME :any = 'TT_GETDEVICEHISTORYLIST'//删除设备列表
-  TT_CHANGEREMARKE_NOTIFICATION_NAME :any = 'TT_CHANGEREMARKE'//修改备注
-  TT_ADDALARM_NOTIFICATION_NAME :any = 'TT_ADDALARM'//添加预警
-  TT_DEVICEOFFLINE_NOTIFICATION_NAME :any = 'TT_DEVICEOFFLINE'//添加预警
+  TT_MQTTCONNET_NOTIFICATION_NAME: any = 'TT_MQTTCONNET'//删除设备列表
+  TT_GETDEVICEHISTORYLIST_NOTIFICATION_NAME: any = 'TT_GETDEVICEHISTORYLIST'//删除设备列表
+  TT_CHANGEREMARKE_NOTIFICATION_NAME: any = 'TT_CHANGEREMARKE'//修改备注
+  TT_ADDALARM_NOTIFICATION_NAME: any = 'TT_ADDALARM'//添加预警
+  TT_DEVICEOFFLINE_NOTIFICATION_NAME: any = 'TT_DEVICEOFFLINE'//添加预警
+  TT_SECONDARYDEVICELIST_NOTIFICATION_NAME: any = 'TT_SECONDARYDEVICELIST'//获取二级设备列表
+  TT_GETSECONDARYDEVICEID_NOTIFICATION_NAME: any = 'TT_GETSECONDARYDEVICEID'//获取二级设备ID
+  TT_ADDGETSECONDARYDEVICE_NOTIFICATION_NAME: any = 'TT_ADDGETSECONDARYDEVICE'//添加二级设备
+  TT_DELETEGETSECONDARYDEVICE_NOTIFICATION_NAME: any = 'TT_DELETEGETSECONDARYDEVICE'//删除二级设备
+  TT_ADDDEVICEGOTOLEARNING_NOTIFICATION_NAME : any = 'TT_ADDDEVICEGOTOLEARNING'//进入学习状态
+  TT_STOPCALL_NAME : any = 'TT_STOPCALL_NAME'//停止拨打电话
+  TT_CLLPHONE_NOTIFICATION_NAME : any = 'TT_CLLPHONE_NOTIFICATION_NAME'//进入学习状态
 
-
+  TT_AddDeviceNotification : any = 'TT_AddDeviceNotification'//添加设备通知
+  TT_CancelPoliceNotification : any = 'TT_CancelPoliceNotification'//取消报警
 
 }

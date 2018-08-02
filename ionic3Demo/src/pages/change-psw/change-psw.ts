@@ -7,6 +7,7 @@ import { Tomato } from '../../lib/tomato'
 import { Base64 } from 'js-base64';
 import { Emitter } from '../../other/emitter'
 import { Storage } from '@ionic/storage'
+import { RegistCode } from '../../other/registCode'
 
 /**
  * Generated class for the ChangePswPage page.
@@ -23,7 +24,7 @@ import { Storage } from '@ionic/storage'
 export class ChangePswPage {
 
 	passWord;
-	constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato,public storage : Storage) {
+	constructor(public serve : RegistCode, public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato,public storage : Storage) {
 		var self = this;
 		Emitter.register(this.ttConst.TT_CHAGEPASSWORD_NOTIFICATION_NAME, self.onChangePaswgeResponse, self);
 	}
@@ -59,7 +60,7 @@ export class ChangePswPage {
 			var dat = this.common.MakeHeader(this.ttConst.CLIENT_UPDATEPWD) +
 				this.common.MakeParam(this.ttConst.CLIENT_UPDATEPWD_OLD, oldpassword.value) +
 				this.common.MakeParam(this.ttConst.CLIENT_UPDATEPWD_NEW, newpassword.value);
-			this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, "", dat);
+			this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, this.serve.getServeId(), dat);
 		}
 	}
 	onChangePaswgeResponse(name, flag, msg) {

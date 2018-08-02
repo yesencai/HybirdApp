@@ -1,3 +1,36 @@
 page-wifi-device {
+    .toolbar-title-md {
+        text-align: center;
+    }
+    .remind{
+        // background-color: red;
+        color: #ccc;
+        font-size: 13px;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-top: 40px;
+    }
+    #change-password-page {
+        position: absolute;
+        margin-top: 20px;
+        left: 0px;
+        right: 0px;
+    }
+    .label {
+        margin-left: 0;
+        width: 60px;
+        //  background-color: black;
+        color: black;
+    }
+    #forget-password {
+        margin-right: 20;
+        border: none;
+        background-color: white;
+    }
+    .change-text-input {
+        margin-left: 180;
+        margin-right: 30;
+                background-color: white;
 
+    }
 }

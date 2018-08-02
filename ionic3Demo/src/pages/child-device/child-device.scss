@@ -1,0 +1,79 @@
+page-child-device {
+    .toolbar-title-md{
+        text-align: center;
+      }
+    .content{
+        background-color: rgb(229, 229, 229);
+    }
+    .siding-type{
+        padding-top: 20px;
+        background-color: white;
+        position: relative;
+
+    }
+    .add-device-style {
+        text-align: center;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+        background-color: #488aff;
+        color: white;
+
+    }
+    .buttom-toobar{
+        min-height: 1rem;
+        height: 35px;
+        padding-left: 0px;
+        background-color:rgb(249, 249, 249);
+        font-size: 6pt;
+    }
+    #removal-style{
+        background-color:rgb(249, 249, 249);
+        display: inline-block;
+        width: 50%;
+        text-align: center;
+        color:#808080;
+    }
+    .online {
+        width: 60px;
+        height: 30px;
+        float: right;
+        position: absolute;
+        top: 50%;
+        margin-top: -15px;
+        right: 10px;
+        color:gray;
+    }
+    p span{
+        color: red;
+    }
+    .input-wrapper {
+        border-top: 1px rgb(249, 249, 249);
+    }
+
+    #removal-style .icon , #home-protection-style .icon{
+        margin-right: 5px;
+        font-family: arial;
+        font-size: 13px;
+        color: gray;
+    }
+    
+    #home-protection-style{
+        background-color:rgb(249, 249, 249);
+        display: inline-block;
+        width: 50%;
+        text-align: center;
+        color:gray;
+
+    }
+    .list-ios .item-block .item-inner{
+        border:0;
+        padding-right:0;
+    }
+    .list-md .item-block .item-inner {
+        border:0;
+        padding-right:0;
+    }
+    
+
+}

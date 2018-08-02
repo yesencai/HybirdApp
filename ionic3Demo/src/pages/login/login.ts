@@ -11,7 +11,7 @@ import { Base64 } from 'js-base64';
 import { Emitter } from '../../other/emitter'
 import { BackButtonProvider } from '../../other/back-button-provider'
 import { Storage } from '@ionic/storage'
-
+import { RegistCode } from '../../other/registCode'
 @IonicPage()
 @Component({
 	selector: 'page-login',
@@ -23,7 +23,7 @@ export class LoginPage {
 	userName;
 	passWord;
 	constructor(public navCtrl: NavController, public navParams: NavParams, private backButtonService: BackButtonProvider,
-		private platform: Platform,public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato,public storage : Storage) {
+		private platform: Platform,public toastCtrl: ToastController, public loadingCtrl: LoadingController, public common: Common, public ttConst: TTConst, public tomato: Tomato,public storage : Storage,public serve : RegistCode) {
 		let self = this;
 		Emitter.register(this.ttConst.TT_LOGIN_NOTIFICATION_NAME, self.onLoginResponse, self);
 		this.platform.ready().then(() => {
@@ -64,7 +64,8 @@ export class LoginPage {
 				var dat = this.common.MakeHeader(this.ttConst.CLIENT_LOGIN) +
 					this.common.MakeParam(this.ttConst.CLIENT_LOGIN_USERNAME, username.value) +
 					this.common.MakeParam(this.ttConst.CLIENT_LOGIN_PASSWORD, password.value);
-				this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER, "", dat);
+					var serveId = this.serve.getServeId();
+				this.common.SendStrByParent(this.tomato.DSTTYPE_SERVER,serveId, dat);
 			}
 
 		}

@@ -1,59 +1,35 @@
 {
-  "_args": [
-    [
-      {
-        "raw": "cordova-plugin-file@6.0.1",
-        "scope": null,
-        "escapedName": "cordova-plugin-file",
-        "name": "cordova-plugin-file",
-        "rawSpec": "6.0.1",
-        "spec": "6.0.1",
-        "type": "version"
-      },
-      "/Users/Dylan/Desktop/HybirdApp-master/ionic3Demo"
-    ]
-  ],
-  "_cnpm_publish_time": 1514690803092,
-  "_from": "cordova-plugin-file@6.0.1",
-  "_hasShrinkwrap": false,
+  "_from": "cordova-plugin-file@>=2.0.0",
   "_id": "cordova-plugin-file@6.0.1",
-  "_inCache": true,
+  "_inBundle": false,
+  "_integrity": "sha1-SWBrjBWlaI1HKPkuSnMloGHeB/U=",
   "_location": "/cordova-plugin-file",
-  "_nodeVersion": "8.2.1",
-  "_npmOperationalInternal": {
-    "host": "s3://npm-registry-packages",
-    "tmp": "tmp/cordova-plugin-file-6.0.1.tgz_1514690802908_0.5163829217199236"
-  },
-  "_npmUser": {
-    "name": "macdonst",
-    "email": "simon.macdonald@gmail.com"
-  },
-  "_npmVersion": "4.6.1",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "cordova-plugin-file@6.0.1",
-    "scope": null,
-    "escapedName": "cordova-plugin-file",
+    "type": "range",
+    "registry": true,
+    "raw": "cordova-plugin-file@>=2.0.0",
     "name": "cordova-plugin-file",
-    "rawSpec": "6.0.1",
-    "spec": "6.0.1",
-    "type": "version"
+    "escapedName": "cordova-plugin-file",
+    "rawSpec": ">=2.0.0",
+    "saveSpec": null,
+    "fetchSpec": ">=2.0.0"
   },
   "_requiredBy": [
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npm.taobao.org/cordova-plugin-file/download/cordova-plugin-file-6.0.1.tgz",
+  "_resolved": "http://registry.npm.taobao.org/cordova-plugin-file/download/cordova-plugin-file-6.0.1.tgz",
   "_shasum": "49606b8c15a5688d4728f92e4a7325a061de07f5",
-  "_shrinkwrap": null,
-  "_spec": "cordova-plugin-file@6.0.1",
-  "_where": "/Users/Dylan/Desktop/HybirdApp-master/ionic3Demo",
+  "_spec": "cordova-plugin-file@>=2.0.0",
+  "_where": "/Users/Dylan/Desktop/IonicHybirdApp/ionic3Demo",
   "author": {
     "name": "Apache Software Foundation"
   },
   "bugs": {
     "url": "https://issues.apache.org/jira/browse/CB"
   },
+  "bundleDependencies": false,
   "cordova": {
     "id": "cordova-plugin-file",
     "platforms": [
@@ -64,7 +40,7 @@
       "windows"
     ]
   },
-  "dependencies": {},
+  "deprecated": false,
   "description": "Cordova File Plugin",
   "devDependencies": {
     "eslint": "^3.19.0",
@@ -74,13 +50,6 @@
     "eslint-plugin-node": "^5.0.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1"
-  },
-  "directories": {},
-  "dist": {
-    "shasum": "49606b8c15a5688d4728f92e4a7325a061de07f5",
-    "size": 246567,
-    "noattachment": false,
-    "tarball": "http://registry.npm.taobao.org/cordova-plugin-file/download/cordova-plugin-file-6.0.1.tgz"
   },
   "engines": {
     "cordovaDependencies": {
@@ -104,48 +73,7 @@
     "cordova-windows"
   ],
   "license": "Apache-2.0",
-  "maintainers": [
-    {
-      "name": "bowserj",
-      "email": "bowserj@apache.org"
-    },
-    {
-      "name": "csantanapr",
-      "email": "csantana23@gmail.com"
-    },
-    {
-      "name": "filmaj",
-      "email": "maj.fil@gmail.com"
-    },
-    {
-      "name": "jcesarmobile",
-      "email": "jcesarmobile@gmail.com"
-    },
-    {
-      "name": "kotikov.vladimir",
-      "email": "kotikov.vladimir@gmail.com"
-    },
-    {
-      "name": "macdonst",
-      "email": "simon.macdonald@gmail.com"
-    },
-    {
-      "name": "purplecabbage",
-      "email": "purplecabbage@gmail.com"
-    },
-    {
-      "name": "shazron",
-      "email": "shazron@gmail.com"
-    },
-    {
-      "name": "stevegill",
-      "email": "stevengill97@gmail.com"
-    }
-  ],
   "name": "cordova-plugin-file",
-  "optionalDependencies": {},
-  "publish_time": 1514690803092,
-  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/apache/cordova-plugin-file.git"
